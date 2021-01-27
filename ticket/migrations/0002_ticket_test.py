@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='ticket',
             name='test',
-            field=models.CharField(default=True, max_length=2),
+            field=models.CharField(default=True, max_length=999),
             preserve_default=False,
         ),
     ]
