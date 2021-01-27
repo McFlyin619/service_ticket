@@ -1,0 +1,183 @@
+{% extends 'base.html' %}
+{% load tz %}
+{% block content %}
+<div>
+    {% if user.accountuser.role == 'Admin' %}
+        <a href="{% url 'ticket_app:all_tickets' %}" type="button" class="btn btn-outline-blue btn-rounded btn-sm px-2">
+            <i class="fas fa-arrow-left lt mt-0"></i>
+        </a>
+        <a href="{% url 'ticket_app:ticket_update' pk=ticket.ticket_number %}" type="button" class="btn btn-outline-blue btn-rounded btn-sm px-2">
+            <i class="fas fa-pencil-alt lt mt-0"></i>
+        </a>
+        <a href="{% url 'ticket_app:ticket_delete' pk=ticket.ticket_number %}" type="button" class="btn btn-outline-danger btn-rounded btn-sm px-2">
+            <i class="far fa-trash-alt mt-0"></i>
+        </a>
+    {% else %}
+        <a href="{% url 'ticket_app:all_tickets' %}" type="button" class="btn btn-outline-blue btn-rounded btn-sm px-2">
+            <i class="fas fa-arrow-left lt mt-0"></i>
+        </a>
+        <a href="{% url 'ticket_app:tech_ticket_update' pk=ticket.ticket_number %}" type="button" class="btn btn-outline-blue btn-rounded btn-sm px-2">
+            <i class="fas fa-pencil-alt lt mt-0"></i>
+        </a>
+    {% endif %}
+    <div class="row justify-content-between">
+        <div class="col-3">
+            <small>
+                Created: {{ ticket.created_at|localtime }}
+            </small>
+        </div>
+        <div class="col-3 ml-auto">
+            <small>
+                Updated: {{ ticket.updated_at|localtime }}
+            </small>
+        </div>
+    </div>
+    <div class="jumbotron p-2 mb-2">
+        <div class="row text-center">
+        {% if not ticket.start_time %}
+            <div class="col-12">
+                Click <a href="{% url 'ticket_app:tech_ticket_update' pk=ticket.ticket_number %}" type="button" class="btn btn-outline-blue btn-rounded btn-sm px-2">
+                    <i class="fas fa-play-circle lt mt-0"></i>
+                </a> to start job.
+            </div>
+        {% else %}
+            <div class="col-4">
+            {% localtime on %}
+                Start: {{ ticket.start_time|time }}
+            {% endlocaltime %}
+            </div>
+            <div class="col-4">
+            {% if not ticket.end_time %}
+                Click <a href="{% url 'ticket_app:tech_ticket_update' pk=ticket.ticket_number %}" type="button" class="btn btn-outline-blue btn-rounded btn-sm px-2">
+                    <i class="fas fa-flag-checkered lt mt-0"></i>
+                </a> to complete job.
+            {% else %}
+            {% localtime on %}
+                End:  {{ ticket.end_time|time }}
+            {% endlocaltime %}
+            {% endif %}
+            </div>
+            <div class="col-4">
+                Total: {{ ticket.start_time|timesince:ticket.end_time}}
+            
+            </div>
+        {% endif %}
+        </div>
+    </div>
+</div>
+<div class="row mb-2">
+    <div class="col-md-6">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title text-center">
+                    Jobsite
+                </h5>
+                <label for="card-text">Address</label>
+                <p class="card-text">
+                    {{ ticket.t_jobsite.address1 }} {{ ticket.t_jobsite.addres2 }}
+                </p>
+                <p class="card-text">
+                    {{ ticket.t_jobsite.city }}, {{ ticket.t_jobsite.state }}, {{ ticket.t_jobsite.zip_code }}
+                </p>
+                <label for="card-text">Contact</label>
+                <p class="card-text">
+                    {{ ticket.t_jobsite.contact_name }} - {{ ticket.t_jobsite.contact_phone }}
+                </p>                
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title text-center">
+                    Sold To
+                </h5>
+                <div class="row">
+                    <div class="col-md">
+                        <label>Name</label>
+                        <p class="card-text">
+                            {{ ticket.t_customer.fname }} {{ ticket.t_customer.lname }} - {{ ticket.t_customer.company}}
+                        </p>
+                    </div>
+                    <div class="col-md">
+                        <label> Email/Phone</label>
+                        <p class="card-text">
+                            {{ ticket.t_customer.email }} - {{ ticket.t_customer.phone_number }}
+                        </p>
+                    </div>
+                </div>
+                <label>Notes</label>
+                <p class="card-text">
+                    {{ ticket.t_customer.note }}
+                </p>                
+            </div>
+        </div>
+    </div>
+</div>
+<div class="jumbotron p-1 mb-2">
+    <div class="row text-center">
+        <div class="col-4">
+        Ticket # {{ ticket.ticket_number }}
+        </div>
+        <div class="col-4">
+            {{ ticket.department }}
+        </div>
+        <div class="col-4">
+            {{ ticket.t_type }} Call
+        </div>
+    </div>
+</div>
+<div class="jumbotron pt-2 mb-2">
+    <div class="row">
+        <label class="lead">
+            Scope
+        </label>
+    </div>
+    <div class="row">
+        <p>
+            {{ ticket.scope }}
+        </p>         
+    </div>
+</div>
+<div class="jumbotron pt-2 mb-2">
+    <div class="row">
+        <label class="lead">
+            Work Done
+        </label>
+    </div>
+    <div class="row">
+        <p>
+            {{ ticket.repair_notes }}
+        </p>         
+    </div>
+</div>
+<div class="jumbotron pt-2">
+    <div class="row">
+        <label class="lead">
+            Additional Work
+        </label>
+    </div>
+    <div class="row">
+        <p>
+            {{ ticket.additional_work }}
+        </p>         
+    </div>
+</div>
+<div class="jumbotron pt-2">
+    <div class="row">
+        <label class="lead">
+           Jobsite History
+        </label>
+    </div>
+    <div class="row">
+    {% for h in history %}
+        <p>
+            <a href="{% url 'ticket_app:ticket_detail' pk=h.ticket_number %}" type="button" class="btn btn-outline-blue btn-rounded btn-sm px-2">
+            Ticket#{{ h.ticket_number }} - Completed: {{ h.end_time }} by {% for t in h.assigned.all%} {{t}} {% endfor %}
+            </a>
+        </p> 
+    {% endfor %}        
+    </div>
+</div>
+
+{% endblock %}
