@@ -16,9 +16,12 @@ def user_login(request):
         user = authenticate(username=username,password=password)
 
         if user:
-            
-            login(request, user)
-            return HttpResponseRedirect(reverse('today'))
+            if user.is_active:
+                login(request, user)
+                return HttpResponseRedirect(reverse('today'))
+
+            else: 
+                return HttpResponse('Account is not active!')
         
         else:
             print('someone tried to login unsuccessfully!')
