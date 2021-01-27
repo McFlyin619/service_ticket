@@ -14,3 +14,5 @@ def percentage(part, whole):
       return 0
    return 100 * float(part)/float(whole)
 
+def reg():
+       pass
