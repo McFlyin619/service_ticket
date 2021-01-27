@@ -7,9 +7,10 @@ from .models import Ticket
 from customer.forms import CustomerCreateForm
 from service_ticket_app.utils import *
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
 
-class TicketCreateView(CreateView):
+class TicketCreateView(CreateView,LoginRequiredMixin):
     model = Ticket
     form_class = TicketForm
     
@@ -23,7 +24,7 @@ class TicketCreateView(CreateView):
         context['tech_ticket_count'] = tech_ticket_count(self.request)
         return context
 
-class TicketListView(ListView):
+class TicketListView(ListView,LoginRequiredMixin):
     model = Ticket
     context_object_name = 'ticket'
 
@@ -34,7 +35,7 @@ class TicketListView(ListView):
         context['tech_ticket_count'] = tech_ticket_count(self.request)
         return context 
     
-class TicketDetailView(DetailView):
+class TicketDetailView(DetailView,LoginRequiredMixin):
     context_object_name = 'ticket'
     model = Ticket
     template_name = 'ticket/ticket_detail.html'
@@ -46,7 +47,7 @@ class TicketDetailView(DetailView):
         context['history'] = Ticket.objects.filter(t_jobsite=self.get_object().t_jobsite, account=self.request.user.accountuser.account, completed=True).order_by('end_time')
         return context  
 
-class TicketUpdateView(UpdateView):
+class TicketUpdateView(UpdateView,LoginRequiredMixin):
     model = Ticket
     form_class = TicketUpdateForm
     
@@ -57,7 +58,7 @@ class TicketUpdateView(UpdateView):
         context['tech_ticket_count'] = tech_ticket_count(self.request)
         return context 
 
-class TechTicketUpdateView(UpdateView):
+class TechTicketUpdateView(UpdateView,LoginRequiredMixin):
     model = Ticket
     form_class = TechTicketUpdateForm
 
@@ -67,7 +68,7 @@ class TechTicketUpdateView(UpdateView):
         context['tech_ticket_count'] = tech_ticket_count(self.request)
         return context
 
-class TicketDeleteView(DeleteView):
+class TicketDeleteView(DeleteView,LoginRequiredMixin):
     model = Ticket
     success_url = reverse_lazy('ticket_app:all_tickets') 
 

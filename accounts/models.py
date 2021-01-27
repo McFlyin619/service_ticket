@@ -17,7 +17,7 @@ class AccountCompany(models.Model):
 class AccountUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     account = models.ForeignKey(AccountCompany, on_delete=models.CASCADE)
-    company = models.CharField(max_length=100)
+    company = models.CharField(max_length=100, blank=True)
     role = models.CharField(choices=ROLES, max_length=20, null=True, default='Tech')
     
 

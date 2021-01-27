@@ -5,7 +5,7 @@ from .utils import *
 
 # Create your views here.
 
-class HomeView(TemplateView):
+class TodayView(TemplateView):
     template_name = "today.html"
 
     def get_context_data(self, **kwargs):
