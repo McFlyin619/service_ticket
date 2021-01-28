@@ -1,9 +1,18 @@
 {% extends 'base.html'%}
 {% load bootstrap4 %}
 {% block content %}
+
+<h2>
+{% if registered %}
+    Tech added!
+{% else %}
+    <h1>Add Tech</h1>
+</h2>
 <form method="POST">
     {% csrf_token %}
-    {% bootsrap_form form %}
+    {% bootstrap_form user_form %}
+    {% bootstrap_form account_user_form %}
     <input class='btn btn-rounded btn-primary' type="submit" value='Save'>
 </form>
+{% endif %}
 {% endblock %}

@@ -1,9 +1,12 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from . import models, forms
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate,login,logout
 from django.urls import reverse_lazy, reverse
 from django.http import request, HttpResponse, HttpResponseRedirect
+from service_ticket_app import utils
+from django.views.generic import ListView,DetailView,CreateView,UpdateView,DeleteView
 # Create your views here.
 
 
@@ -25,7 +28,7 @@ def user_login(request):
         
         else:
             print('someone tried to login unsuccessfully!')
-            return HttpResponse('Username or Password does not match our records. Please try again.')
+            return HttpResponse('<h1 class="text-center">Username or Password does not match our records. Please try again.</h1>')
 
     else:
         return render(request, 'accounts/login.html')
@@ -57,6 +60,31 @@ def add_user(request):
     else:
         user_form = forms.UserCreateForm()
         account_user_form = forms.AccountUserForm()   
+    
+    ticket_count = utils.ticket_count(request)
+    tech_ticket_count = utils.tech_ticket_count(request)
+    
+    context = {
+        'registered':registered,
+        'user_form':user_form,
+        'account_user_form':account_user_form,
+        'ticket_count':ticket_count,
+        'tech_ticket_count':tech_ticket_count,
+    }
 
-    return render(request,'',{ 
-    'registered':registered}) 
+    return render(request,'accounts/add_user.html',context=context) 
+
+class UserListView(ListView,LoginRequiredMixin):
+    model = models.AccountUser
+    context_object_name = 'accountuser'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['ticket_count'] = utils.ticket_count(self.request)
+        context['tech_ticket'] = utils.tech_tickets(self.request)
+        context['tech_ticket_count'] = utils.tech_ticket_count(self.request)
+        return context 
+
+class UserDeleteView(DeleteView,LoginRequiredMixin):
+    model = models.AccountUser
+    success_url = reverse_lazy('accounts:users')

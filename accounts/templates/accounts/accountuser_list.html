@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<!-- Table with panel -->
+<div class="card card-cascade narrower">
+    <!--Card image-->
+    <div class="view view-cascade gradient-card-header blue-gradient narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center">
+        <div class='justify-content-start'>
+            <a href="{% url 'accounts:add_user' %}" type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
+                <i class="fas fa-plus mt-0"></i> New User
+            </a> 
+        </div>
+        <div>
+            <div class="white-text mx-3">{{request.user.accountuser.account}} users</div>
+        </div>
+    </div>
+    <!--/Card image-->
+    <div class="px-5">
+        <div class="table-wrapper">
+            {% comment %} <h2 class='mb-3'>Basic example</h2> {% endcomment %}
+            <table id="ticket_list" class="table table-hover table-sm table-responsive-sm" width="100%">
+                <thead>
+                    <tr>
+                        <th class="th-sm">Username
+                        </th>
+                        <th class="th-sm">Email
+                        </th>
+                        <th class="th-sm">Role
+                        </th>
+                        <th class="th-sm">
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for u in accountuser %}
+                        <tr>
+                            <td>{{ u.user.username }}</td>
+                            <td> {{ u.user.email }} </td>
+                            <td> {{ u.role }} </td>
+                            <td>
+                                <a href="{% url 'accounts:delete_user' pk=u.pk %}" type="button" class="btn btn-outline-danger btn-rounded btn-sm px-2">
+                                    <i class="fas fa-trash-alt lt mt-0"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- Table with panel -->
+
+
+{% endblock %}

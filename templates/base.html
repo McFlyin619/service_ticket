@@ -50,8 +50,9 @@ bottom: .5em;
 <div id="slide-out" class="side-nav2 side">
     <ul class="custom-scrollbar">
     <!-- Logo -->
-        <li>
-            <img src="" class="img-fluid flex-center">
+        <li class='text-center'>
+            <h4> Hi {{ user.accountuser.user.username}}!</h4>
+            <small>{{ user.accountuser.account}}</small>
         </li>
         <!--/. Logo -->
         <!-- Side navigation links -->
@@ -64,7 +65,7 @@ bottom: .5em;
                         <ul>
                             <li>
                                 <a href="{% url 'today' %}" class="waves-effect">
-                                   Todays
+                                   Today
                                 </a>
                             </li>
                             <li>
@@ -111,15 +112,18 @@ bottom: .5em;
             </ul>
             <ul class="collapsible collapsible-accordion">
                 <li>
-                    <a class="collapsible-header waves-effect arrow-r"><i class="fas fa-chevron-right"></i> 
-                        Notes
-                        <i class="fas fa-angle-down rotate-icon"></i>
+                    <a class="collapsible-header waves-effect arrow-r"><i class="fas fa-chevron-right"></i>Management<i class="fas fa-angle-down rotate-icon"></i>
                     </a>
                     <div class="collapsible-body">
                         <ul>
                             <li>
-                                <a href="" class="waves-effect">
-                                    #3
+                                <a href="{% url 'accounts:add_user' %}" class="waves-effect">
+                                    Add User
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'accounts:users' %}" class="waves-effect">
+                                    Users
                                 </a>
                             </li>
                         </ul>
