@@ -83,6 +83,7 @@ class UserListView(ListView,LoginRequiredMixin):
         context['ticket_count'] = utils.ticket_count(self.request)
         context['tech_ticket'] = utils.tech_tickets(self.request)
         context['tech_ticket_count'] = utils.tech_ticket_count(self.request)
+        context['accountuser'] = models.AccountUser.objects.filter(account=self.request.user.accountuser.account)
         return context 
 
 class UserDeleteView(DeleteView,LoginRequiredMixin):
