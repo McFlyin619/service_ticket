@@ -23,12 +23,15 @@
     <div class="row justify-content-between">
         <div class="col-3">
             <small>
+            {% localtime on %}
                 Created: {{ ticket.created_at|localtime }}
             </small>
+            {% endlocaltime %}
         </div>
         <div class="col-3 ml-auto">
             <small>
-                Updated: {{ ticket.updated_at|localtime }}
+
+                Updated: {{ ticket.updated_at }}
             </small>
         </div>
     </div>
