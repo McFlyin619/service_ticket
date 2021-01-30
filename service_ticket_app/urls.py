@@ -19,10 +19,12 @@ from django.urls.conf import include
 from . import views
 
 urlpatterns = [
-    path('today/', views.TodayView.as_view(), name='today'),
-    path('schedule/',views.CalendarView.as_view(), name='schedule'),
     path('admin/', admin.site.urls),
     path('', include('accounts.urls')),
     path('', include('customer.urls')),
-    path('', include('ticket.urls'))
+    path('', include('ticket.urls')),
+    path('', views.TodayView.as_view(), name='today'),
+    path('accounts/login/', views.user_login, name='login'),
+    path('schedule/',views.CalendarView.as_view(), name='schedule'),
+    path('upcoming/', views.UpcomingView.as_view(), name='upcoming'),
 ]

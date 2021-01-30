@@ -99,6 +99,7 @@
         }, 3000);
         });
 </script>
+
 <script>
 $(document).ready(function(){
     var today = new Date();
@@ -109,8 +110,10 @@ $(document).ready(function(){
             right: 'listWeek,month'
         },
         defaultDate: today,
+        defaultView: 'listWeek',
         navLinks: true,
         eventLimit: true,
+      
         
         eventRender: function (eventObj, $el) {
             $el.popover({

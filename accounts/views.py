@@ -10,29 +10,6 @@ from django.views.generic import ListView,DetailView,CreateView,UpdateView,Delet
 # Create your views here.
 
 
-def user_login(request):
-    
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-
-        user = authenticate(username=username,password=password)
-
-        if user:
-            if user.is_active:
-                login(request, user)
-                return HttpResponseRedirect(reverse('today'))
-
-            else: 
-                return HttpResponse('Account is not active!')
-        
-        else:
-            print('someone tried to login unsuccessfully!')
-            return HttpResponse('<h1 class="text-center">Username or Password does not match our records. Please try again.</h1>')
-
-    else:
-        return render(request, 'accounts/login.html')
-
 @login_required
 def add_user(request):
     registered = False
