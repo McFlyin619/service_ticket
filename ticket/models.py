@@ -29,7 +29,7 @@ class TicketType(models.Model):
         return self.name
     
     def get_absolute_url(self):
-        return reverse("ticket_app:tickettype_list", kwargs={"pk": self.id})
+        return reverse("ticket_app:ticket_type_list")
 
 class ServiceProvided(models.Model):
     name = models.CharField(max_length=100)
