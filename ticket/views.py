@@ -130,7 +130,7 @@ class TicketTypeCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.account = self.request.user.accountuser.account
-        return super(TicketCreateView, self).form_valid(form)
+        return super(TicketTypeCreateView, self).form_valid(form)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
