@@ -1,3 +1,4 @@
+from upcoming.models import Post
 from ticket.models import *
 
 # Tickets
@@ -49,3 +50,8 @@ def tech_todays_tickets(request):
 def tech_completed_today_tickets_count(request):
     tech_completed_today_tickets_count = Ticket.objects.filter(account=request.user.accountuser.account, schedule=datetime.date.today(), start_job=True, completed=True, assigned=request.user.accountuser).count()
     return tech_completed_today_tickets_count
+
+
+def posts(request):
+    posts = Post.objects.filter(account=request.user.accountuser.account)
+    return posts

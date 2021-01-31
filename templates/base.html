@@ -68,6 +68,21 @@ bottom: .5em;
                             <li>
                                 <a href="{% url 'today' %}" class="waves-effect">
                                    Today
+                                   <span class="badge badge-light ml-2">
+                                    {% if user.accountuser.role == 'Admin' %}
+                                        {% if not todays_tickets_count %}
+                                            0
+                                        {% else %}
+                                            {{ todays_tickets_count }}
+                                        {% endif %}
+                                    {% else %}
+                                        {% if not tech_todays_ticket_count %}
+                                            0
+                                        {% else %}
+                                            {{ tech_todays_tickets_count }}
+                                        {% endif %}
+                                    {% endif %}
+                                    </span>
                                 </a>
                             </li>
                             <li>
@@ -76,7 +91,7 @@ bottom: .5em;
                                 </a>
                             </li>
                             <li>
-                                <a href="{% url 'upcoming' %}" class="waves-effect">
+                                <a href="{% url 'upcoming:upcoming' %}" class="waves-effect">
                                    Upcoming 
                                 </a>
                             </li>
@@ -88,17 +103,6 @@ bottom: .5em;
                 <li>
                     <a class="collapsible-header waves-effect arrow-r"><i class="fas fa-chevron-right"></i> 
                         Tickets 
-                        <span class="badge badge-light ml-2">
-                        {% if user.accountuser.role == 'Admin' %}
-                            {{ ticket_count }}
-                        {% else %}
-                            {% if not tech_ticket_count %}
-                                0
-                            {% else %}
-                                {{ tech_ticket_count }}
-                            {% endif %}
-                        {% endif %}
-                        </span>
                         <i class="fas fa-angle-down rotate-icon"></i>
                     </a>
                     <div class="collapsible-body">
@@ -106,6 +110,17 @@ bottom: .5em;
                             <li>
                                 <a href="{% url 'ticket_app:all_tickets' %}" class="waves-effect">
                                     All
+                                    <span class="badge badge-light ml-2">
+                                    {% if user.accountuser.role == 'Admin' %}
+                                        {{ ticket_count }}
+                                    {% else %}
+                                        {% if not tech_ticket_count %}
+                                            0
+                                        {% else %}
+                                            {{ tech_ticket_count }}
+                                        {% endif %}
+                                    {% endif %}
+                                    </span>
                                 </a>
                             </li>
                             <li>
@@ -119,7 +134,7 @@ bottom: .5em;
             </ul>
             <ul class="collapsible collapsible-accordion">
                 <li>
-                    <a class="collapsible-header waves-effect arrow-r"><i class="fas fa-chevron-right"></i>Management<i class="fas fa-angle-down rotate-icon"></i>
+                    <a class="collapsible-header waves-effect arrow-r"><i class="fas fa-chevron-right"></i>Manage<i class="fas fa-angle-down rotate-icon"></i>
                     </a>
                     <div class="collapsible-body">
                         <ul>
@@ -131,6 +146,11 @@ bottom: .5em;
                             <li>
                                 <a href="{% url 'accounts:users' %}" class="waves-effect">
                                     Users
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'ticket_app:ticket_type_list' %}" class="waves-effect">
+                                    Ticket Type
                                 </a>
                             </li>
                         </ul>

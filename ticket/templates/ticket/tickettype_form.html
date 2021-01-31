@@ -1,0 +1,19 @@
+{% extends 'base.html'%}
+{% load bootstrap4 %}
+{% block content %}
+    <h2>
+{% if not form.instance.pk %}
+        Add Ticket Type
+    {% elif user.accountuser.role == 'Admin' %}
+        Admin Edit
+    {% else %}
+        Edit
+{% endif %}
+    </h2>
+<small>i.e. service call, warranty, etc</small>
+    <form method='POST'>
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <input class='btn btn-rounded btn-primary' type="submit" value='Save'>
+    </form>
+{% endblock %}

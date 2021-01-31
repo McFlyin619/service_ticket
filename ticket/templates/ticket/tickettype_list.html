@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Ticket Types</h2>
+<a href="{% url 'ticket_app:new_ticket_type' %}" type='button' class='btn btn-rounded btn-outline-primary'> New Type</a>
+<ul class="list-group">
+{% for tt in tickettype %}
+  <li class="list-group-item">{{tt.name}}</li>
+{% endfor %}
+</ul>
+{% endblock %}

@@ -10,7 +10,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
 
-class TicketCreateView(CreateView,LoginRequiredMixin):
+class TicketCreateView(LoginRequiredMixin,CreateView):
     model = Ticket
     form_class = TicketForm
     
@@ -22,20 +22,34 @@ class TicketCreateView(CreateView,LoginRequiredMixin):
         context = super().get_context_data(**kwargs)
         context['ticket_count'] = ticket_count(self.request)
         context['tech_ticket_count'] = tech_ticket_count(self.request)
+        context['todays_tickets'] = todays_tickets(self.request)
+        context['tech_todays_tickets'] = tech_todays_tickets(self.request)
+        context['todays_tickets_count'] = todays_tickets_count(self.request)
+        context['in_progress_count'] = in_progress_count(self.request)
+        context['completed_today_tickets_count'] = completed_today_tickets_count(self.request)
+        context['tech_todays_tickets_count'] = tech_todays_tickets_count(self.request)
+        context['tech_completed_today_tickets_count'] = tech_completed_today_tickets_count(self.request)
         return context
 
-class TicketListView(ListView,LoginRequiredMixin):
+class TicketListView(LoginRequiredMixin,ListView):
     model = Ticket
     context_object_name = 'ticket'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['ticket_count'] = ticket_count(self.request)
         context['tech_ticket'] = tech_tickets(self.request)
+        context['ticket_count'] = ticket_count(self.request)
         context['tech_ticket_count'] = tech_ticket_count(self.request)
+        context['todays_tickets'] = todays_tickets(self.request)
+        context['tech_todays_tickets'] = tech_todays_tickets(self.request)
+        context['todays_tickets_count'] = todays_tickets_count(self.request)
+        context['in_progress_count'] = in_progress_count(self.request)
+        context['completed_today_tickets_count'] = completed_today_tickets_count(self.request)
+        context['tech_todays_tickets_count'] = tech_todays_tickets_count(self.request)
+        context['tech_completed_today_tickets_count'] = tech_completed_today_tickets_count(self.request)
         return context 
     
-class TicketDetailView(DetailView,LoginRequiredMixin):
+class TicketDetailView(LoginRequiredMixin, DetailView):
     context_object_name = 'ticket'
     model = Ticket
     template_name = 'ticket/ticket_detail.html'
@@ -44,10 +58,17 @@ class TicketDetailView(DetailView,LoginRequiredMixin):
         context = super().get_context_data(**kwargs)
         context['ticket_count'] = ticket_count(self.request)
         context['tech_ticket_count'] = tech_ticket_count(self.request)
+        context['todays_tickets'] = todays_tickets(self.request)
+        context['tech_todays_tickets'] = tech_todays_tickets(self.request)
+        context['todays_tickets_count'] = todays_tickets_count(self.request)
+        context['in_progress_count'] = in_progress_count(self.request)
+        context['completed_today_tickets_count'] = completed_today_tickets_count(self.request)
+        context['tech_todays_tickets_count'] = tech_todays_tickets_count(self.request)
+        context['tech_completed_today_tickets_count'] = tech_completed_today_tickets_count(self.request)
         context['history'] = Ticket.objects.filter(t_jobsite=self.get_object().t_jobsite, account=self.request.user.accountuser.account, completed=True).order_by('end_time')
         return context  
 
-class TicketUpdateView(UpdateView,LoginRequiredMixin):
+class TicketUpdateView(LoginRequiredMixin,UpdateView):
     model = Ticket
     form_class = TicketUpdateForm
     
@@ -56,9 +77,16 @@ class TicketUpdateView(UpdateView,LoginRequiredMixin):
         context = super().get_context_data(**kwargs)
         context['ticket_count'] = ticket_count(self.request)
         context['tech_ticket_count'] = tech_ticket_count(self.request)
+        context['todays_tickets'] = todays_tickets(self.request)
+        context['tech_todays_tickets'] = tech_todays_tickets(self.request)
+        context['todays_tickets_count'] = todays_tickets_count(self.request)
+        context['in_progress_count'] = in_progress_count(self.request)
+        context['completed_today_tickets_count'] = completed_today_tickets_count(self.request)
+        context['tech_todays_tickets_count'] = tech_todays_tickets_count(self.request)
+        context['tech_completed_today_tickets_count'] = tech_completed_today_tickets_count(self.request)
         return context 
 
-class TechTicketUpdateView(UpdateView,LoginRequiredMixin):
+class TechTicketUpdateView(LoginRequiredMixin, UpdateView):
     model = Ticket
     form_class = TechTicketUpdateForm
 
@@ -66,9 +94,16 @@ class TechTicketUpdateView(UpdateView,LoginRequiredMixin):
         context = super().get_context_data(**kwargs)
         context['ticket_count'] = ticket_count(self.request)
         context['tech_ticket_count'] = tech_ticket_count(self.request)
+        context['todays_tickets'] = todays_tickets(self.request)
+        context['tech_todays_tickets'] = tech_todays_tickets(self.request)
+        context['todays_tickets_count'] = todays_tickets_count(self.request)
+        context['in_progress_count'] = in_progress_count(self.request)
+        context['completed_today_tickets_count'] = completed_today_tickets_count(self.request)
+        context['tech_todays_tickets_count'] = tech_todays_tickets_count(self.request)
+        context['tech_completed_today_tickets_count'] = tech_completed_today_tickets_count(self.request)
         return context
 
-class TicketDeleteView(DeleteView,LoginRequiredMixin):
+class TicketDeleteView(LoginRequiredMixin, DeleteView):
     model = Ticket
     success_url = reverse_lazy('ticket_app:all_tickets') 
 
@@ -88,3 +123,43 @@ def customer_popup(request):
 # 		data = {'author_id':author_id,}
 # 		return HttpResponse(json.dumps(data), content_type='application/json')
 # 	return HttpResponse("/")
+
+class TicketTypeCreateView(LoginRequiredMixin, CreateView):
+    model = TicketType
+    fields = ('name',)
+
+    def form_valid(self, form):
+        form.instance.account = self.request.user.accountuser.account
+        return super(TicketCreateView, self).form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['tech_ticket'] = tech_tickets(self.request)
+        context['ticket_count'] = ticket_count(self.request)
+        context['tech_ticket_count'] = tech_ticket_count(self.request)
+        context['todays_tickets'] = todays_tickets(self.request)
+        context['tech_todays_tickets'] = tech_todays_tickets(self.request)
+        context['todays_tickets_count'] = todays_tickets_count(self.request)
+        context['in_progress_count'] = in_progress_count(self.request)
+        context['completed_today_tickets_count'] = completed_today_tickets_count(self.request)
+        context['tech_todays_tickets_count'] = tech_todays_tickets_count(self.request)
+        context['tech_completed_today_tickets_count'] = tech_completed_today_tickets_count(self.request)
+        return context 
+
+class TicketTypeListView(LoginRequiredMixin, ListView):
+    model = TicketType
+    context_object_name = 'tickettype'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['tech_ticket'] = tech_tickets(self.request)
+        context['ticket_count'] = ticket_count(self.request)
+        context['tech_ticket_count'] = tech_ticket_count(self.request)
+        context['todays_tickets'] = todays_tickets(self.request)
+        context['tech_todays_tickets'] = tech_todays_tickets(self.request)
+        context['todays_tickets_count'] = todays_tickets_count(self.request)
+        context['in_progress_count'] = in_progress_count(self.request)
+        context['completed_today_tickets_count'] = completed_today_tickets_count(self.request)
+        context['tech_todays_tickets_count'] = tech_todays_tickets_count(self.request)
+        context['tech_completed_today_tickets_count'] = tech_completed_today_tickets_count(self.request)
+        return context 
