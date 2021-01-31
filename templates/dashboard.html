@@ -2,7 +2,7 @@
 {% block content %}
 {% if user.accountuser.role == 'Admin' %}
 <section class="p-5 z-depth-1 mb-5">
-    <h3 class="text-center font-weight-bold mb-5">Hello {{ user.accountuser.user.username }}!</h3>
+    <h3 class="text-center font-weight-bold mb-5"></h3>
     <div class="row d-flex justify-content-center">
         <div class="col-md-6 col-lg-3 mb-4 text-center">
             <h4 class="h1 font-weight-normal mb-3">
@@ -36,7 +36,7 @@
 </section>
 {% else %}
 <section class="p-5 z-depth-1 mb-5">
-    <h3 class="text-center font-weight-bold mb-5">Hello {{ user.accountuser.user.username }}!</h3>
+    <h3 class="text-center font-weight-bold mb-5"></h3>
     <div class="row d-flex justify-content-center">
         <div class="col-md-6 col-lg-3 mb-4 text-center">
             <h4 class="h1 font-weight-normal mb-3">
@@ -57,7 +57,7 @@
 {% endif %}
 
 {% block dash %}
-
+{% endblock %}
 {% block scripts %}
 <script>
     (function ($){
@@ -99,7 +99,6 @@
         }, 3000);
         });
 </script>
-
 <script>
 $(document).ready(function(){
     var today = new Date();
@@ -154,6 +153,4 @@ $(document).ready(function(){
 });
 </script>
 {% endblock %}
-{% endblock %}
-
 {% endblock %}
