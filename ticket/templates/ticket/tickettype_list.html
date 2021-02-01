@@ -1,10 +1,31 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2>Ticket Types</h2>
-<a href="{% url 'ticket_app:new_ticket_type' %}" type='button' class='btn btn-rounded btn-outline-primary'> New Type</a>
+<div class="row justify-content-between mb-5">
+  <div class='col-3'>
+    <h2>Ticket Types</h2>
+    <hr>
+  </div>
+  <div class='col-1'> 
+    <a href="{% url 'ticket_app:new_ticket_type' %}" type='button' class='btn btn-sm btn-rounded btn-outline-primary'><i class="fas fa-plus text-primary"></i></a>
+    </a>
+  </div>
+</div>
+
+
 <ul class="list-group">
 {% for tt in tickettype %}
-  <li class="list-group-item">{{tt.name}}</li>
+  <li class="list-group-item">
+    <div class="row justify-content-between">
+      <div class='col-4'>
+        {{tt.name}}
+      </div>
+      <div class='col-1'> 
+        <a href="{% url 'ticket_app:tickettype_delete' pk=tt.id %}" type="button" class="btn btn-outline-danger btn-rounded btn-sm px-2">
+          <i class="far fa-trash-alt mt-0"></i>
+        </a>
+      </div>
+    </div>
+  </li>
 {% endfor %}
 </ul>
 {% endblock %}

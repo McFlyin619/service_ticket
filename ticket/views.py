@@ -163,3 +163,7 @@ class TicketTypeListView(LoginRequiredMixin, ListView):
         context['tech_todays_tickets_count'] = tech_todays_tickets_count(self.request)
         context['tech_completed_today_tickets_count'] = tech_completed_today_tickets_count(self.request)
         return context 
+
+class TicketTypeDeleteView(LoginRequiredMixin, DeleteView):
+    model = TicketType
+    success_url = reverse_lazy('ticket_app:ticket_type_list') 
