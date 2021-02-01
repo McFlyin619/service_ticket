@@ -174,11 +174,14 @@
     </div>
     <div class="row">
     {% for h in history %}
-        <p>
-            <a href="{% url 'ticket_app:ticket_detail' pk=h.ticket_number %}" type="button" class="btn btn-outline-blue btn-rounded btn-sm px-2">
-            Ticket#{{ h.ticket_number }} - Completed: {{ h.end_time }} by {% for t in h.assigned.all%} {{t}} {% endfor %}
-            </a>
-        </p> 
+        {% if h.ticket_number == ticket.ticket_number %}
+        {% else %}
+            <div class='col-auto'>
+                <a href="{% url 'ticket_app:ticket_detail' pk=h.ticket_number %}" type="button" class="btn btn-outline-blue btn-rounded px-2">
+                #{{ h.ticket_number }} - {{ h.end_time|date }} by {% for t in h.assigned.all%} {{t}} {% endfor %}
+                </a>
+            </div> 
+        {% endif %}
     {% endfor %}        
     </div>
 </div>
