@@ -27,4 +27,5 @@ urlpatterns = [
     path('', views.TodayView.as_view(), name='today'),
     path('accounts/login/', views.user_login, name='login'),
     path('schedule/',views.CalendarView.as_view(), name='schedule'),
+    path('logged_out/',views.user_logout, name='user_logout'),
 ]

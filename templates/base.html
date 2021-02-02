@@ -54,7 +54,7 @@ bottom: .5em;
     <!-- Logo -->
         <li class='text-center'>
             <h4> Hi {{ user.accountuser.user.username}}!</h4>
-            <small>{{ user.accountuser.account}}</small>
+            <small><b>{{ user.accountuser.account}}</b></small>
         </li>
         <!--/. Logo -->
         <!-- Side navigation links -->
@@ -139,10 +139,25 @@ bottom: .5em;
                     <div class="collapsible-body">
                         <ul>
                             <li>
-                                <a href="{% url 'accounts:add_user' %}" class="waves-effect">
-                                    Add User
+                                <a href="{% url 'accounts:users' %}" class="waves-effect">
+                                    Company
                                 </a>
                             </li>
+                            <li>
+                                <a href="{% url 'ticket_app:ticket_type_list' %}" class="waves-effect">
+                                    Ticket Type
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+            <ul class="collapsible collapsible-accordion">
+                <li>
+                    <a class="collapsible-header waves-effect arrow-r"><i class="fas fa-chevron-right"></i>{{request.user.accountuser.account}} Settings<i class="fas fa-angle-down rotate-icon"></i>
+                    </a>
+                    <div class="collapsible-body">
+                        <ul>
                             <li>
                                 <a href="{% url 'accounts:users' %}" class="waves-effect">
                                     Users
@@ -151,6 +166,26 @@ bottom: .5em;
                             <li>
                                 <a href="{% url 'ticket_app:ticket_type_list' %}" class="waves-effect">
                                     Ticket Type
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+            <ul class="collapsible collapsible-accordion">
+                <li>
+                    <a class="collapsible-header waves-effect arrow-r"><i class="fas fa-chevron-right"></i>{{request.user.accountuser.account}} Account<i class="fas fa-angle-down rotate-icon"></i>
+                    </a>
+                    <div class="collapsible-body">
+                        <ul>
+                            <li>
+                                <a href="#" class="waves-effect">
+                                    Profile
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'user_logout' %}" class="waves-effect">
+                                    Logout
                                 </a>
                             </li>
                         </ul>

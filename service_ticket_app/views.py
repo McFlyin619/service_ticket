@@ -5,6 +5,7 @@ from .utils import *
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import request, HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 def user_login(request):
     
@@ -28,6 +29,11 @@ def user_login(request):
 
     else:
         return render(request, 'login.html')
+
+@login_required
+def user_logout(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('today'))
 
 class TodayView(LoginRequiredMixin, TemplateView):
     template_name = "today.html"
@@ -59,5 +65,3 @@ class CalendarView(LoginRequiredMixin, TemplateView):
         context['completed_today_tickets_count'] = completed_today_tickets_count(self.request)
         context['tech_todays_tickets_count'] = tech_todays_tickets_count(self.request)
         return context
-
-
