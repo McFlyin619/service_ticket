@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from . import models
 
+
 class UserCreateForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
 
@@ -13,3 +14,4 @@ class AccountUserForm(forms.ModelForm):
     class Meta():
         model = models.AccountUser
         fields = ('role',)
+

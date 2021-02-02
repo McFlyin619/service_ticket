@@ -65,9 +65,9 @@
                             <td>{{ t.department }}</td>
                             <td>{{ t.t_type }}</td>
                             <td>
-                            {% for t in t.assigned.all %}
-                                {{ t }}
-                            {% endfor %}
+                                {% for t in t.assigned.all %}
+                                    {{ t }}
+                                {% endfor %}
                             </td>
                             <td>
                                 <a href="{% url 'ticket_app:ticket_detail' pk=t.ticket_number %}" type="button" class="btn btn-outline-blue btn-rounded btn-sm px-2">

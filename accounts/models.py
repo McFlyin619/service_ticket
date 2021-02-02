@@ -5,7 +5,8 @@ from django.contrib.auth.models import User
 # Create your models here.
 ROLES = {
     ('Admin','Admin'),
-    ('Tech','Tech')
+    ('Tech','Tech'),
+    ('Customer','Customer')
 }
 
 class AccountCompany(models.Model):

@@ -1,6 +1,6 @@
 from django.http import request
 from ticket.forms import TechTicketUpdateForm, TicketForm, TicketUpdateForm
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.generic import ListView,DetailView,CreateView,UpdateView,DeleteView
 from .models import Ticket
@@ -14,6 +14,11 @@ class TicketCreateView(LoginRequiredMixin,CreateView):
     model = Ticket
     form_class = TicketForm
     
+    def get_form(self, form_class=None):
+        form = super(TicketCreateView, self).get_form(form_class)
+        form.fields['assigned'].queryset = AccountUser.objects.filter(account=self.request.user.accountuser.account)
+        return form
+
     def form_valid(self, form):
         form.instance.account = self.request.user.accountuser.account
         return super(TicketCreateView, self).form_valid(form)
