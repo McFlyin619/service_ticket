@@ -45,12 +45,12 @@ class ServiceProvided(models.Model):
 
 class Ticket(models.Model):
     ticket_number = models.CharField(primary_key=True, max_length=10)
-    t_customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    t_jobsite = models.ForeignKey(Jobsite, on_delete=models.CASCADE)
+    t_customer = models.ForeignKey(Customer,null=True, on_delete=models.SET_NULL)
+    t_jobsite = models.ForeignKey(Jobsite,null=True, on_delete=models.SET_NULL)
     stop = models.CharField(choices=STOP, max_length=254, default='1st')
     assigned = models.ManyToManyField(AccountUser, blank=True)
-    department = models.ForeignKey(ServiceProvided, on_delete=models.CASCADE)
-    t_type = models.ForeignKey(TicketType, on_delete=models.CASCADE)
+    department = models.ForeignKey(ServiceProvided,null=True, on_delete=models.SET_NULL)
+    t_type = models.ForeignKey(TicketType,null=True, on_delete=models.SET_NULL)
     scope = models.TextField()
     repair_notes = models.TextField(blank=True)
     additional_work = models.TextField(blank=True)

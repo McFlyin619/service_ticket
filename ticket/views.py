@@ -17,6 +17,10 @@ class TicketCreateView(LoginRequiredMixin,CreateView):
     def get_form(self, form_class=None):
         form = super(TicketCreateView, self).get_form(form_class)
         form.fields['assigned'].queryset = AccountUser.objects.filter(account=self.request.user.accountuser.account)
+        form.fields['t_customer'].queryset = Customer.objects.filter(account=self.request.user.accountuser.account)
+        form.fields['t_jobsite'].queryset = Jobsite.objects.filter(account=self.request.user.accountuser.account)
+        form.fields['department'].queryset = ServiceProvided.objects.filter(account=self.request.user.accountuser.account)
+        form.fields['t_type'].queryset = TicketType.objects.filter(account=self.request.user.accountuser.account)
         return form
 
     def form_valid(self, form):

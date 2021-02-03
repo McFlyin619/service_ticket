@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1> Are you sure you want to delete {{ jobsite.address1 }} {{ jobsite.address2 }}, {{ jobsite.city }}?</h1>
+
+<form method="post">
+    {% csrf_token %}
+    <input type="submit" class="btn btn-danger btn-rounded" value="Delete">
+    <a href="{% url 'customer:jobsites' %}" type='button' class='btn btn-outline-dark btn-rounded'>Cancel</a>
+</form>
+
+{% endblock %}

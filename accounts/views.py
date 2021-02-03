@@ -1,12 +1,14 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
-from . import models, forms
+from . import forms
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate,login,logout
 from django.urls import reverse_lazy, reverse
 from django.http import request, HttpResponse, HttpResponseRedirect
 from service_ticket_app import utils
 from django.views.generic import ListView,DetailView,CreateView,UpdateView,DeleteView
+from service_ticket_app.utils import *
+from accounts.models import *
 # Create your views here.
 
 
@@ -52,17 +54,24 @@ def add_user(request):
     return render(request,'accounts/add_user.html',context=context) 
 
 class UserListView(ListView,LoginRequiredMixin):
-    model = models.AccountUser
+    model = AccountUser
     context_object_name = 'accountuser'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['ticket_count'] = utils.ticket_count(self.request)
-        context['tech_ticket'] = utils.tech_tickets(self.request)
-        context['tech_ticket_count'] = utils.tech_ticket_count(self.request)
-        context['accountuser'] = models.AccountUser.objects.filter(account=self.request.user.accountuser.account)
+        context['ticket_count'] = ticket_count(self.request)
+        context['tech_ticket'] = tech_tickets(self.request)
+        context['tech_ticket_count'] = tech_ticket_count(self.request)
+        context['accountuser'] = AccountUser.objects.filter(account=self.request.user.accountuser.account)
+        context['todays_tickets'] = todays_tickets(self.request)
+        context['tech_todays_tickets'] = tech_todays_tickets(self.request)
+        context['todays_tickets_count'] = todays_tickets_count(self.request)
+        context['in_progress_count'] = in_progress_count(self.request)
+        context['completed_today_tickets_count'] = completed_today_tickets_count(self.request)
+        context['tech_todays_tickets_count'] = tech_todays_tickets_count(self.request)
+        context['tech_completed_today_tickets_count'] = tech_completed_today_tickets_count(self.request)
         return context 
 
 class UserDeleteView(DeleteView,LoginRequiredMixin):
-    model = models.AccountUser
+    model = AccountUser
     success_url = reverse_lazy('accounts:users')

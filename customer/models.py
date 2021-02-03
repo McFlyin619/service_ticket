@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.urls import reverse
 from phone_field import PhoneField
 
 from accounts.models import AccountCompany
@@ -17,19 +17,27 @@ class Company(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse("customer:companies")
+    
+
 
 class Customer(models.Model):
     fname = models.CharField(max_length=50)
     lname = models.CharField(max_length=50)
     email = models.EmailField()
     phone_number = PhoneField()
-    company = models.ForeignKey(Company, on_delete=models.CASCADE)
+    company = models.ForeignKey(Company,null=True, on_delete=models.SET_NULL)
     note = models.TextField()
     account = models.ForeignKey(AccountCompany, on_delete=models.CASCADE)
     
 
     def __str__(self):
         return self.fname + ' ' + self.lname + ' - ' + str(self.company)
+
+    def get_absolute_url(self):
+        return reverse("customer:customers")
+    
 
 class Jobsite(models.Model):
     address1 = models.CharField(max_length=100)
@@ -43,3 +51,7 @@ class Jobsite(models.Model):
 
     def __str__(self):
         return self.address1 +' '+ self.address2 +' '+ self.city
+
+    def get_absolute_url(self):
+        return reverse("customer:jobsites")
+    
