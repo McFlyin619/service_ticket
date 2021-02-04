@@ -51,7 +51,28 @@ def tech_completed_today_tickets_count(request):
     tech_completed_today_tickets_count = Ticket.objects.filter(account=request.user.accountuser.account, schedule=datetime.date.today(), start_job=True, completed=True, assigned=request.user.accountuser).count()
     return tech_completed_today_tickets_count
 
+# Other Models
 
 def posts(request):
     posts = Post.objects.filter(account=request.user.accountuser.account)
     return posts
+
+def ticket_type(request):
+    tickettype = TicketType.objects.filter(account=request.user.accountuser.account)
+    return tickettype
+
+def company(request):
+    company = Company.objects.filter(account=request.user.accountuser.account)
+    return company
+
+def customer(request):
+    customer = Customer.objects.filter(account=request.user.accountuser.account)
+    return customer
+
+def jobsite(request):
+    jobsite = Jobsite.objects.filter(account=request.user.accountuser.account)
+    return jobsite
+
+def service_provided(request):
+    serviceprovided = ServiceProvided.objects.filter(account=request.user.accountuser.account)
+    return serviceprovided

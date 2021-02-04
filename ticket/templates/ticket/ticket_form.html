@@ -1,6 +1,21 @@
 {% extends 'base.html'%}
 {% load bootstrap4 %}
 {% block content %}
+{% if not company %}
+    <h5>
+        Please add atleast one company to create a ticket!
+        <a href="{% url 'customer:add_company' %}" type="button" class="btn btn-outline-primary btn-rounded btn-sm px-2"><i class="fas fa-user-plus mt-0"></i> 
+        Add Company
+        </a>    
+    </h5>
+{% elif not customer %}
+    <h5>
+        Please add atleast one customer to create a ticket!
+        <a href="{% url 'customer:add_customer' %}" type="button" class="btn btn-outline-primary btn-rounded btn-sm px-2"><i class="fas fa-user-plus mt-0"></i> 
+        New Customer
+        </a>    
+    </h5>
+{% else %}
     <h2>
 {% if not form.instance.pk %}
         Add New Service Ticket
@@ -15,4 +30,5 @@
         {% bootstrap_form form %}
         <input class='btn btn-rounded btn-primary' type="submit" value='Save'>
     </form>
+    {% endif %}
 {% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<a href="{% url 'upcoming:upcoming' %}" type="button" class="btn btn-outline-blue btn-rounded btn-sm px-2">
+<i class="fas fa-arrow-left lt mt-0"></i>
+</a>
+<div class='jumbotron '>
+    <div class="container">
+        <h2 class="display-4 text-center">{{ post.title }}</h2>
+        <hr class="">
+        <p class="lead">{{ post.description }}</p>
+        <hr class="my-4">
+        <small>{{ post.date }}</small>
+  </div>
+</div>
+{% endblock %}

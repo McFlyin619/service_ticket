@@ -5,6 +5,7 @@ from phone_field import PhoneField
 from accounts.models import AccountCompany
 
 # Create your models here.
+
 class Company(models.Model):
     name = models.CharField(max_length=100)
     address1 = models.CharField(max_length=100)

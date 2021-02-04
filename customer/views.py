@@ -48,6 +48,7 @@ class CompanyListView(LoginRequiredMixin,ListView):
         context['completed_today_tickets_count'] = completed_today_tickets_count(self.request)
         context['tech_todays_tickets_count'] = tech_todays_tickets_count(self.request)
         context['tech_completed_today_tickets_count'] = tech_completed_today_tickets_count(self.request)
+        context['company'] = company(self.request)
         return context
 
 class CompanyUpdateView(LoginRequiredMixin,UpdateView):
@@ -74,6 +75,11 @@ class CompanyDeleteView(LoginRequiredMixin, DeleteView):
 class CustomerCreateView(LoginRequiredMixin,CreateView):
     model = Customer
     form_class = CustomerCreateForm
+
+    def get_form(self, form_class=None):
+        form = super(CustomerCreateView, self).get_form(form_class)
+        form.fields['company'].queryset = Company.objects.filter(account=self.request.user.accountuser.account)
+        return form
 
     def form_valid(self, form):
         form.instance.account = self.request.user.accountuser.account
@@ -107,6 +113,7 @@ class CustomerListView(LoginRequiredMixin,ListView):
         context['completed_today_tickets_count'] = completed_today_tickets_count(self.request)
         context['tech_todays_tickets_count'] = tech_todays_tickets_count(self.request)
         context['tech_completed_today_tickets_count'] = tech_completed_today_tickets_count(self.request)
+        context['customer'] = customer(self.request)
         return context
 
 class CustomerUpdateView(LoginRequiredMixin,UpdateView):
@@ -166,6 +173,7 @@ class JobsiteListView(LoginRequiredMixin,ListView):
         context['completed_today_tickets_count'] = completed_today_tickets_count(self.request)
         context['tech_todays_tickets_count'] = tech_todays_tickets_count(self.request)
         context['tech_completed_today_tickets_count'] = tech_completed_today_tickets_count(self.request)
+        context['jobsite'] = jobsite(self.request)
         return context
 
 class JobsiteUpdateView(LoginRequiredMixin,UpdateView):

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row justify-content-between mb-5">
+  <div class='col-3'>
+    <h2>Services</h2>
+    <hr>
+  </div>
+  <div class='col-1'> 
+    <a href="{% url 'ticket_app:new_serviceprovided' %}" type='button' class='btn btn-sm btn-rounded btn-outline-primary'><i class="fas fa-plus text-primary"></i></a>
+    </a>
+  </div>
+</div>
+
+
+<ul class="list-group">
+{% for s in serviceprovided %}
+  <li class="list-group-item">
+    <div class="row justify-content-between">
+      <div class='col-4'>
+        {{s.name}}
+      </div>
+      <div class='col-1'> 
+        <a href="{% url 'ticket_app:delete_serviceprovided' pk=s.id %}" type="button" class="btn btn-outline-danger btn-rounded btn-sm px-2">
+          <i class="far fa-trash-alt mt-0"></i>
+        </a>
+      </div>
+    </div>
+  </li>
+{% endfor %}
+</ul>
+{% endblock %}

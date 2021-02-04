@@ -38,6 +38,8 @@ class TicketCreateView(LoginRequiredMixin,CreateView):
         context['completed_today_tickets_count'] = completed_today_tickets_count(self.request)
         context['tech_todays_tickets_count'] = tech_todays_tickets_count(self.request)
         context['tech_completed_today_tickets_count'] = tech_completed_today_tickets_count(self.request)
+        context['customer'] = customer(self.request)
+        context['company'] = company(self.request)
         return context
 
 class TicketListView(LoginRequiredMixin,ListView):
@@ -171,8 +173,54 @@ class TicketTypeListView(LoginRequiredMixin, ListView):
         context['completed_today_tickets_count'] = completed_today_tickets_count(self.request)
         context['tech_todays_tickets_count'] = tech_todays_tickets_count(self.request)
         context['tech_completed_today_tickets_count'] = tech_completed_today_tickets_count(self.request)
+        context['tickettype'] = ticket_type(self.request)
         return context 
 
 class TicketTypeDeleteView(LoginRequiredMixin, DeleteView):
     model = TicketType
     success_url = reverse_lazy('ticket_app:ticket_type_list') 
+
+class ServiceProvidedCreateView(LoginRequiredMixin, CreateView):
+    model = ServiceProvided
+    fields = ('name',)
+
+    def form_valid(self, form):
+        form.instance.account = self.request.user.accountuser.account
+        return super(ServiceProvidedCreateView, self).form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['tech_ticket'] = tech_tickets(self.request)
+        context['ticket_count'] = ticket_count(self.request)
+        context['tech_ticket_count'] = tech_ticket_count(self.request)
+        context['todays_tickets'] = todays_tickets(self.request)
+        context['tech_todays_tickets'] = tech_todays_tickets(self.request)
+        context['todays_tickets_count'] = todays_tickets_count(self.request)
+        context['in_progress_count'] = in_progress_count(self.request)
+        context['completed_today_tickets_count'] = completed_today_tickets_count(self.request)
+        context['tech_todays_tickets_count'] = tech_todays_tickets_count(self.request)
+        context['tech_completed_today_tickets_count'] = tech_completed_today_tickets_count(self.request)
+        return context 
+
+class ServiceProvidedListView(LoginRequiredMixin, ListView):
+    model = ServiceProvided
+    context_object_name = 'serviceprovided'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['tech_ticket'] = tech_tickets(self.request)
+        context['ticket_count'] = ticket_count(self.request)
+        context['tech_ticket_count'] = tech_ticket_count(self.request)
+        context['todays_tickets'] = todays_tickets(self.request)
+        context['tech_todays_tickets'] = tech_todays_tickets(self.request)
+        context['todays_tickets_count'] = todays_tickets_count(self.request)
+        context['in_progress_count'] = in_progress_count(self.request)
+        context['completed_today_tickets_count'] = completed_today_tickets_count(self.request)
+        context['tech_todays_tickets_count'] = tech_todays_tickets_count(self.request)
+        context['tech_completed_today_tickets_count'] = tech_completed_today_tickets_count(self.request)
+        context['serviceprovided'] = service_provided(self.request)
+        return context 
+
+class ServiceProvidedDeleteView(LoginRequiredMixin, DeleteView):
+    model = ServiceProvided
+    success_url = reverse_lazy('ticket_app:serviceprovided_list') 

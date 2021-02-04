@@ -22,5 +22,6 @@ app_name = 'upcoming'
 
 urlpatterns = [
     path('upcoming/', views.UpcomingView.as_view(), name='upcoming'),
-    path('new-post/', views.PostCreateView.as_view(), name='new_post')
+    path('new-post/', views.PostCreateView.as_view(), name='new_post'),
+    path('post-detail/<pk>',views.PostDetailView.as_view(), name='post_detail')
 ]

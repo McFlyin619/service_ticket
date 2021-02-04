@@ -20,6 +20,10 @@ STOP = (
     ('6th','6th'),
     ('LUNCH','LUNCH')
 )
+
+# JOBSITE_DEFAULT = (
+#     ('Same as Customer','Same as Customer')
+# )
 class TicketType(models.Model):
     name = models.CharField(max_length=100)
 
@@ -40,13 +44,16 @@ class ServiceProvided(models.Model):
         return self.name
     
     def get_absolute_url(self):
-        return reverse("ticket")
+        return reverse("ticket_app:serviceprovided_list")
 
+#  Create a function that automatically creates a jobsite that is Same on everything to allow there to be no jobsite but use customer address instead. then add customer address to Ticket Deatil page
+# def set_default_jobsite():
+#     return Ticket.objects.get_or_create(t_jobsite='Same as customer')[0]
 
 class Ticket(models.Model):
     ticket_number = models.CharField(primary_key=True, max_length=10)
     t_customer = models.ForeignKey(Customer,null=True, on_delete=models.SET_NULL)
-    t_jobsite = models.ForeignKey(Jobsite,null=True, on_delete=models.SET_NULL)
+    t_jobsite = models.ForeignKey(Jobsite, null=True, on_delete=models.SET_NULL)
     stop = models.CharField(choices=STOP, max_length=254, default='1st')
     assigned = models.ManyToManyField(AccountUser, blank=True)
     department = models.ForeignKey(ServiceProvided,null=True, on_delete=models.SET_NULL)

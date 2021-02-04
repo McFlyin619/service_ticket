@@ -13,5 +13,6 @@ class Post(models.Model):
     account = models.ForeignKey(AccountCompany, on_delete=models.CASCADE)
 
     def get_absolute_url(self):
-        return reverse("upcoming:upcoming")
+        return reverse("upcoming:post_detail", kwargs={"pk": self.pk})
+    
     
