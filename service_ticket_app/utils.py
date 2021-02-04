@@ -76,3 +76,7 @@ def jobsite(request):
 def service_provided(request):
     serviceprovided = ServiceProvided.objects.filter(account=request.user.accountuser.account)
     return serviceprovided
+
+def ticket(request):
+    ticket = Ticket.objects.filter(account=request.user.accountuser.account)
+    return ticket

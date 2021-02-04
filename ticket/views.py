@@ -58,6 +58,7 @@ class TicketListView(LoginRequiredMixin,ListView):
         context['completed_today_tickets_count'] = completed_today_tickets_count(self.request)
         context['tech_todays_tickets_count'] = tech_todays_tickets_count(self.request)
         context['tech_completed_today_tickets_count'] = tech_completed_today_tickets_count(self.request)
+        context['ticket'] = ticket(self.request)
         return context 
     
 class TicketDetailView(LoginRequiredMixin, DetailView):
