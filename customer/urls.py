@@ -1,14 +1,14 @@
-from ticket.views import customer_popup
+
 from django.contrib import admin
 from django.urls import path
 from django.urls.conf import include
-from customer import views
 
+from customer import views
 
 app_name = 'customer'
 
 urlpatterns = [
-    # path('customer-create/',customer_popup, name='customer-popup')
+    
     # Customers
     path('customers/', views.CustomerListView.as_view(),name='customers'),
     path('add-customer/',views.CustomerCreateView.as_view(), name="add_customer"),

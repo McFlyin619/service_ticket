@@ -1,13 +1,15 @@
-from django.http import request
-from ticket.forms import TechTicketUpdateForm, TicketForm, TicketUpdateForm
-from django.shortcuts import get_object_or_404, render
-from django.http import HttpResponse, HttpResponseRedirect
-from django.views.generic import ListView,DetailView,CreateView,UpdateView,DeleteView
-from .models import Ticket
-from customer.forms import CustomerCreateForm
-from service_ticket_app.utils import *
-from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponse, HttpResponseRedirect, request
+from django.shortcuts import get_object_or_404, render
+from django.urls import reverse_lazy
+from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
+                                  UpdateView)
+from service_ticket_app.utils import *
+
+from ticket.forms import TechTicketUpdateForm, TicketForm, TicketUpdateForm
+
+from .models import Ticket
+
 # Create your views here.
 
 class TicketCreateView(LoginRequiredMixin,CreateView):
@@ -38,8 +40,9 @@ class TicketCreateView(LoginRequiredMixin,CreateView):
         context['completed_today_tickets_count'] = completed_today_tickets_count(self.request)
         context['tech_todays_tickets_count'] = tech_todays_tickets_count(self.request)
         context['tech_completed_today_tickets_count'] = tech_completed_today_tickets_count(self.request)
-        context['customer'] = customer(self.request)
-        context['company'] = company(self.request)
+        context['company_count'] = company_count(self.request)
+        context['customer_count'] = customer_count(self.request)
+        context['jobsite_count'] = jobsite_count(self.request)
         return context
 
 class TicketListView(LoginRequiredMixin,ListView):
@@ -118,23 +121,6 @@ class TechTicketUpdateView(LoginRequiredMixin, UpdateView):
 class TicketDeleteView(LoginRequiredMixin, DeleteView):
     model = Ticket
     success_url = reverse_lazy('ticket_app:all_tickets') 
-
-def customer_popup(request):
-    form = CustomerCreateForm(request.POST or None)
-    if form.is_valid:
-        instance = form.save()
-
-        return HttpResponse('<script>opener.closePopup(window, "%s", "%s", "#id_customer");</script>' % (instance.pk, instance))
-    return render(request, 'customer/customer_form.html',{'form':form})
-
-# @csrf_exempt
-# def get_customer_id(request):
-# 	if request.is_ajax():
-# 		fname = request.GET['fname']
-# 		customer_id = Customer.objects.get(fname=fname).id
-# 		data = {'author_id':author_id,}
-# 		return HttpResponse(json.dumps(data), content_type='application/json')
-# 	return HttpResponse("/")
 
 class TicketTypeCreateView(LoginRequiredMixin, CreateView):
     model = TicketType

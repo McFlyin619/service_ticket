@@ -1,34 +1,43 @@
 {% extends 'base.html'%}
 {% load bootstrap4 %}
 {% block content %}
-{% if not company %}
+
+{% if company_count <= 0 %}
     <h5>
         Please add atleast one company to create a ticket!
         <a href="{% url 'customer:add_company' %}" type="button" class="btn btn-outline-primary btn-rounded btn-sm px-2"><i class="fas fa-user-plus mt-0"></i> 
-        Add Company
+        Company
         </a>    
     </h5>
-{% elif not customer %}
+{% elif customer_count <= 0 %}
     <h5>
         Please add atleast one customer to create a ticket!
         <a href="{% url 'customer:add_customer' %}" type="button" class="btn btn-outline-primary btn-rounded btn-sm px-2"><i class="fas fa-user-plus mt-0"></i> 
-        New Customer
+        Customer
+        </a>    
+    </h5>
+{% elif jobsite_count <= 0 %}
+    <h5>
+        Please add atleast one jobsite to create a ticket!
+        <a href="{% url 'customer:add_jobsite' %}" type="button" class="btn btn-outline-primary btn-rounded btn-sm px-2"><i class="fas fa-user-plus mt-0"></i> 
+        Jobsite
         </a>    
     </h5>
 {% else %}
     <h2>
-{% if not form.instance.pk %}
-        Add New Service Ticket
-    {% elif user.accountuser.role == 'Admin' %}
-        Admin Edit
-    {% else %}
-        Edit
-{% endif %}
-    </h2>
-    <form method='POST'>
-        {% csrf_token %}
-        {% bootstrap_form form %}
-        <input class='btn btn-rounded btn-primary' type="submit" value='Save'>
-    </form>
+    {% if not form.instance.pk %}
+            Add New Service Ticket
+        {% elif user.accountuser.role == 'Admin' %}
+            Admin Edit
+        {% else %}
+            Edit
     {% endif %}
+        </h2>
+        <form method='POST' enctype = "multipart/form-data">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            
+            <input class='btn btn-rounded btn-primary' type="submit" value='Save'>
+        </form>
+{% endif %}
 {% endblock %}

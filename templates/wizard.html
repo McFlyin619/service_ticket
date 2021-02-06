@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% if not wizard %}
+<h1>Tutorial</h1>
+    <h5>
+        Lets add a customer to get started!
+        <a href="{% url 'customer:add_customer' %}" type="button" class="btn btn-outline-primary btn-rounded btn-sm px-2"><i class="fas fa-user-plus mt-0"></i> 
+        New Customer
+        </a>    
+    </h5>
+{% else %}
+    <h5>
+        Continue
+        <a href="{% url 'today' %}" type="button" class="btn btn-outline-primary btn-rounded btn-sm px-2"><i class="fas fa-user-plus mt-0"></i> 
+        </a>    
+    </h5>
+{% endif %}
+
+
+{% endblock %}

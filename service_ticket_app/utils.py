@@ -65,13 +65,25 @@ def company(request):
     company = Company.objects.filter(account=request.user.accountuser.account)
     return company
 
+def company_count(request):
+    company_count = Company.objects.filter(account=request.user.accountuser.account).count()
+    return company_count
+
 def customer(request):
     customer = Customer.objects.filter(account=request.user.accountuser.account)
+    return customer
+
+def customer_count(request):
+    customer = Customer.objects.filter(account=request.user.accountuser.account).count()
     return customer
 
 def jobsite(request):
     jobsite = Jobsite.objects.filter(account=request.user.accountuser.account)
     return jobsite
+
+def jobsite_count(request):
+    jobsite_count = Jobsite.objects.filter(account=request.user.accountuser.account).count()
+    return jobsite_count
 
 def service_provided(request):
     serviceprovided = ServiceProvided.objects.filter(account=request.user.accountuser.account)
