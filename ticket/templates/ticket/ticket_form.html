@@ -5,21 +5,21 @@
 {% if company_count <= 0 %}
     <h5>
         Please add atleast one company to create a ticket!
-        <a href="{% url 'customer:add_company' %}" type="button" class="btn btn-outline-primary btn-rounded btn-sm px-2"><i class="fas fa-user-plus mt-0"></i> 
+        <a href="{% url 'customer_app:add_company' %}" type="button" class="btn btn-outline-primary btn-rounded btn-sm px-2"><i class="fas fa-user-plus mt-0"></i> 
         Company
         </a>    
     </h5>
 {% elif customer_count <= 0 %}
     <h5>
         Please add atleast one customer to create a ticket!
-        <a href="{% url 'customer:add_customer' %}" type="button" class="btn btn-outline-primary btn-rounded btn-sm px-2"><i class="fas fa-user-plus mt-0"></i> 
+        <a href="{% url 'customer_app:add_customer' %}" type="button" class="btn btn-outline-primary btn-rounded btn-sm px-2"><i class="fas fa-user-plus mt-0"></i> 
         Customer
         </a>    
     </h5>
 {% elif jobsite_count <= 0 %}
     <h5>
         Please add atleast one jobsite to create a ticket!
-        <a href="{% url 'customer:add_jobsite' %}" type="button" class="btn btn-outline-primary btn-rounded btn-sm px-2"><i class="fas fa-user-plus mt-0"></i> 
+        <a href="{% url 'customer_app:add_jobsite' %}" type="button" class="btn btn-outline-primary btn-rounded btn-sm px-2"><i class="fas fa-user-plus mt-0"></i> 
         Jobsite
         </a>    
     </h5>

@@ -5,7 +5,7 @@ from django.urls.conf import include
 
 from customer import views
 
-app_name = 'customer'
+app_name = 'customer_app'
 
 urlpatterns = [
     

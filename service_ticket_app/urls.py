@@ -24,6 +24,7 @@ urlpatterns = [
     path('', include('customer.urls')),
     path('', include('ticket.urls')),
     path('',include('upcoming.urls')),
+    path('',include('part.urls')),
     path('', views.TodayView.as_view(), name='today'),
     path('accounts/login/', views.user_login, name='login'),
     path('schedule/',views.CalendarView.as_view(), name='schedule'),
