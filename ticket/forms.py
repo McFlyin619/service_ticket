@@ -24,7 +24,7 @@ class TicketUpdateForm(forms.ModelForm):
     
     class Meta:
         model = Ticket
-        fields = ('ticket_number','t_customer','t_jobsite','assigned','stop','department','t_type','scope','repair_notes','additional_work','schedule','start_job','completed',)
+        fields = ('ticket_number','t_customer','t_jobsite','assigned','stop','department','t_type','scope','repair_notes','additional_work','schedule','start_time','end_time','start_job','completed',)
         
 
     def __init__(self, *args, **kwargs):

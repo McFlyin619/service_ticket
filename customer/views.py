@@ -70,7 +70,7 @@ class CompanyUpdateView(LoginRequiredMixin,UpdateView):
 
 class CompanyDeleteView(LoginRequiredMixin, DeleteView):
     model = Company
-    success_url = reverse_lazy('customer:companies') 
+    success_url = reverse_lazy('customer_app:companies') 
 
 class CustomerCreateView(LoginRequiredMixin,CreateView):
     model = Customer
@@ -135,7 +135,7 @@ class CustomerUpdateView(LoginRequiredMixin,UpdateView):
 
 class CustomerDeleteView(LoginRequiredMixin, DeleteView):
     model = Customer
-    success_url = reverse_lazy('customer:customers') 
+    success_url = reverse_lazy('customer_app:customers') 
     
 class JobsiteCreateView(LoginRequiredMixin,CreateView):
     model = Jobsite
@@ -195,4 +195,4 @@ class JobsiteUpdateView(LoginRequiredMixin,UpdateView):
 
 class JobsiteDeleteView(LoginRequiredMixin, DeleteView):
     model = Jobsite
-    success_url = reverse_lazy('customer:jobsites')
+    success_url = reverse_lazy('customer_app:jobsites')

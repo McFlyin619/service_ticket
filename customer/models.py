@@ -19,7 +19,7 @@ class Company(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse("customer:companies")
+        return reverse("customer_app:companies")
     
 
 
@@ -37,7 +37,7 @@ class Customer(models.Model):
         return self.fname + ' ' + self.lname + ' - ' + str(self.company)
 
     def get_absolute_url(self):
-        return reverse("customer:customers")
+        return reverse("customer_app:customers")
     
 
 class Jobsite(models.Model):
@@ -54,5 +54,5 @@ class Jobsite(models.Model):
         return self.address1 +' '+ self.address2 +' '+ self.city
 
     def get_absolute_url(self):
-        return reverse("customer:jobsites")
+        return reverse("customer_app:jobsites")
     

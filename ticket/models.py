@@ -6,6 +6,7 @@ from django.db import models
 
 from customer.models import *
 from accounts.models import AccountCompany, AccountUser
+from part.models import Part
 
 import datetime
 from django.utils import timezone
@@ -60,6 +61,7 @@ class Ticket(models.Model):
     t_type = models.ForeignKey(TicketType,null=True, on_delete=models.SET_NULL)
     scope = models.TextField()
     repair_notes = models.TextField(blank=True)
+    # parts_used = models.ManyToManyField(Part, blank=True)
     additional_work = models.TextField(blank=True)
     schedule = models.DateField(default=datetime.date.today)
     start_job = models.BooleanField(default=False)

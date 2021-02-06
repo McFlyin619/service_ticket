@@ -9,9 +9,15 @@ from service_ticket_app.utils import *
 from ticket.forms import TechTicketUpdateForm, TicketForm, TicketUpdateForm
 
 from .models import Ticket
+from part.models import Part
+from part.forms import PartForm
+
+from django.forms.models import inlineformset_factory
 
 # Create your views here.
 
+# Need to create another model for part under ticket that has a foreign key to the original part model to call it multiple times with formset
+# PartsTicketFormSet = inlineformset_factory(Ticket, Part, form=PartForm, extra=10 )
 class TicketCreateView(LoginRequiredMixin,CreateView):
     model = Ticket
     form_class = TicketForm
@@ -99,6 +105,7 @@ class TicketUpdateView(LoginRequiredMixin,UpdateView):
         context['completed_today_tickets_count'] = completed_today_tickets_count(self.request)
         context['tech_todays_tickets_count'] = tech_todays_tickets_count(self.request)
         context['tech_completed_today_tickets_count'] = tech_completed_today_tickets_count(self.request)
+        # context['formset'] = PartsTicketFormSet(instance=Part())
         return context 
 
 class TechTicketUpdateView(LoginRequiredMixin, UpdateView):
