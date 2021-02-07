@@ -1,18 +1,17 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.forms.models import inlineformset_factory
 from django.http import HttpResponse, HttpResponseRedirect, request
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse_lazy
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   UpdateView)
+from part.forms import PartForm
+from part.models import Part
 from service_ticket_app.utils import *
 
 from ticket.forms import TechTicketUpdateForm, TicketForm, TicketUpdateForm
 
 from .models import Ticket
-from part.models import Part
-from part.forms import PartForm
-
-from django.forms.models import inlineformset_factory
 
 # Create your views here.
 
@@ -112,6 +111,7 @@ class TechTicketUpdateView(LoginRequiredMixin, UpdateView):
     model = Ticket
     form_class = TechTicketUpdateForm
 
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['ticket_count'] = ticket_count(self.request)
@@ -123,6 +123,7 @@ class TechTicketUpdateView(LoginRequiredMixin, UpdateView):
         context['completed_today_tickets_count'] = completed_today_tickets_count(self.request)
         context['tech_todays_tickets_count'] = tech_todays_tickets_count(self.request)
         context['tech_completed_today_tickets_count'] = tech_completed_today_tickets_count(self.request)
+
         return context
 
 class TicketDeleteView(LoginRequiredMixin, DeleteView):

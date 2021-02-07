@@ -24,7 +24,7 @@ TEMPLATE_DIR = os.path.join(BASE_DIR,'templates')
 SECRET_KEY = 'w_l5m(^=b67xf-4i4ewf9t1^0cn*jfhcxs*es+#@9dwtr=_^vr'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['servusticket.obrienmcquade.com','servus-ticket.herokuapp.com', '127.0.0.1']
 

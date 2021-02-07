@@ -1,14 +1,18 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render
-from . import forms
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate,login,logout
-from django.urls import reverse_lazy, reverse
-from django.http import request, HttpResponse, HttpResponseRedirect
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponse, HttpResponseRedirect, request
+from django.shortcuts import render
+from django.urls import reverse, reverse_lazy
+from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
+                                  UpdateView)
 from service_ticket_app import utils
-from django.views.generic import ListView,DetailView,CreateView,UpdateView,DeleteView
 from service_ticket_app.utils import *
+
 from accounts.models import *
+
+from . import forms
+
 # Create your views here.
 
 

@@ -1,7 +1,9 @@
 from django import forms
-from django.db.models.query import QuerySet
-from .models import *
 from django.contrib.auth.models import User
+from django.db.models.query import QuerySet
+
+from .models import *
+
 
 class TicketForm(forms.ModelForm):
     
@@ -42,4 +44,7 @@ class TechTicketUpdateForm(forms.ModelForm):
         model = Ticket
         fields = ('ticket_number','start_job','completed','repair_notes','additional_work')      
 
-        
+# class PartsUsedForm(forms.ModelForm):
+#     class Meta:
+#         model = PartsUsed 
+#         fields = ('part',)     

@@ -51,6 +51,7 @@ class ServiceProvided(models.Model):
 # def set_default_jobsite():
 #     return Ticket.objects.get_or_create(t_jobsite='Same as customer')[0]
 
+
 class Ticket(models.Model):
     ticket_number = models.CharField(primary_key=True, max_length=10)
     t_customer = models.ForeignKey(Customer,null=True, on_delete=models.SET_NULL)
@@ -62,6 +63,7 @@ class Ticket(models.Model):
     scope = models.TextField()
     repair_notes = models.TextField(blank=True)
     # parts_used = models.ManyToManyField(Part, blank=True)
+    # parts_used = models.TextField()
     additional_work = models.TextField(blank=True)
     schedule = models.DateField(default=datetime.date.today)
     start_job = models.BooleanField(default=False)
@@ -88,5 +90,16 @@ class Ticket(models.Model):
     def get_absolute_url(self):
         return reverse("ticket_app:ticket_detail", kwargs={"pk": self.ticket_number})
     
+
+
+# class PartsUsed(models.Model):
+#     part = models.ForeignKey(Part, null=True, on_delete=models.SET_NULL)
+#     ticket = models.ForeignKey(Ticket, null=True, on_delete=models.SET_NULL)
+
+#     account = models.ForeignKey(AccountCompany, on_delete=models.CASCADE)
+
+#     def __str__(self):
+#         return str(self.part) + str(self.ticket)
+
     
     
