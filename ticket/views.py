@@ -1,22 +1,18 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.forms.models import inlineformset_factory
-from django.http import HttpResponse, HttpResponseRedirect, request
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   UpdateView)
-from part.forms import PartForm
-from part.models import Part
 from service_ticket_app.utils import *
 
 from ticket.forms import TechTicketUpdateForm, TicketForm, TicketUpdateForm
 
+from .filters import TicketFilter
 from .models import Ticket
 
 # Create your views here.
 
-# Need to create another model for part under ticket that has a foreign key to the original part model to call it multiple times with formset
-# PartsTicketFormSet = inlineformset_factory(Ticket, Part, form=PartForm, extra=10 )
 class TicketCreateView(LoginRequiredMixin,CreateView):
     model = Ticket
     form_class = TicketForm
@@ -91,7 +87,6 @@ class TicketDetailView(LoginRequiredMixin, DetailView):
 class TicketUpdateView(LoginRequiredMixin,UpdateView):
     model = Ticket
     form_class = TicketUpdateForm
-    
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -110,7 +105,6 @@ class TicketUpdateView(LoginRequiredMixin,UpdateView):
 class TechTicketUpdateView(LoginRequiredMixin, UpdateView):
     model = Ticket
     form_class = TechTicketUpdateForm
-
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -219,3 +213,17 @@ class ServiceProvidedListView(LoginRequiredMixin, ListView):
 class ServiceProvidedDeleteView(LoginRequiredMixin, DeleteView):
     model = ServiceProvided
     success_url = reverse_lazy('ticket_app:serviceprovided_list') 
+
+@login_required
+def reports(request):
+    ticket_filter = TicketFilter(request.GET, queryset=Ticket.objects.filter(account=request.user.accountuser.account))
+       
+    context = {
+        'ticket_filter': ticket_filter,
+        'ticket_count' : ticket_count(request),
+        'tech_ticket_count' : tech_ticket_count(request),
+        'tickets' : all_tickets(request),
+        
+    }
+    return render(request,'ticket/reports.html',context=context)
+    
