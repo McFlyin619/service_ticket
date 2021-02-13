@@ -2,7 +2,10 @@ from django import forms
 from django.contrib.auth.models import User
 from django.db.models.query import QuerySet
 
+from django.forms.models import inlineformset_factory
+
 from .models import *
+
 
 
 class TicketForm(forms.ModelForm):
@@ -48,3 +51,5 @@ class TechTicketUpdateForm(forms.ModelForm):
 #     class Meta:
 #         model = PartsUsed 
 #         fields = ('part',)     
+
+# PartsFormSet = inlineformset_factory(Ticket, PartsUsed, fields=('part',))
