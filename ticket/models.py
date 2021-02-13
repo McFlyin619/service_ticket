@@ -6,7 +6,7 @@ from django.db import models
 
 from customer.models import *
 from accounts.models import AccountCompany, AccountUser
-from part.models import Part
+
 
 import datetime
 from django.utils import timezone
@@ -63,7 +63,7 @@ class Ticket(models.Model):
     scope = models.TextField()
     repair_notes = models.TextField(blank=True)
     # parts_used = models.ManyToManyField(Part, blank=True)
-    # parts_used = models.TextField()
+    parts_used = models.TextField()
     additional_work = models.TextField(blank=True)
     schedule = models.DateField(default=datetime.date.today)
     start_job = models.BooleanField(default=False)
@@ -76,6 +76,7 @@ class Ticket(models.Model):
     account = models.ForeignKey(AccountCompany, on_delete=models.CASCADE)
 
     def save(self, *args, **kwargs):
+        # automatically assigns current time to fields based on conditions
         if self.start_job and self.start_time is None:
             self.start_time = timezone.now()
         elif self.completed and self.end_time is None:
@@ -90,7 +91,6 @@ class Ticket(models.Model):
     def get_absolute_url(self):
         return reverse("ticket_app:ticket_detail", kwargs={"pk": self.ticket_number})
     
-
 
 # class PartsUsed(models.Model):
 #     part = models.ForeignKey(Part, null=True, on_delete=models.SET_NULL)
