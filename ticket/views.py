@@ -18,6 +18,9 @@ class TicketCreateView(LoginRequiredMixin,CreateView):
     form_class = TicketForm
     
     def get_form(self, form_class=None):
+        """
+        Gets the form and filters the fields to only show information related the the logged in users account
+        """
         form = super(TicketCreateView, self).get_form(form_class)
         form.fields['assigned'].queryset = AccountUser.objects.filter(account=self.request.user.accountuser.account)
         form.fields['t_customer'].queryset = Customer.objects.filter(account=self.request.user.accountuser.account)
@@ -27,6 +30,9 @@ class TicketCreateView(LoginRequiredMixin,CreateView):
         return form
 
     def form_valid(self, form):
+        """
+        Uopn a valid form, assigns the logged in users account to the account of the Ticket model
+        """
         form.instance.account = self.request.user.accountuser.account
         return super(TicketCreateView, self).form_valid(form)
     
@@ -87,6 +93,18 @@ class TicketDetailView(LoginRequiredMixin, DetailView):
 class TicketUpdateView(LoginRequiredMixin,UpdateView):
     model = Ticket
     form_class = TicketUpdateForm
+
+    def get_form(self, form_class=None):
+        """
+        Gets the form and filters the fields to only show information related the the logged in users account
+        """
+        form = super(TicketCreateView, self).get_form(form_class)
+        form.fields['assigned'].queryset = AccountUser.objects.filter(account=self.request.user.accountuser.account)
+        form.fields['t_customer'].queryset = Customer.objects.filter(account=self.request.user.accountuser.account)
+        form.fields['t_jobsite'].queryset = Jobsite.objects.filter(account=self.request.user.accountuser.account)
+        form.fields['department'].queryset = ServiceProvided.objects.filter(account=self.request.user.accountuser.account)
+        form.fields['t_type'].queryset = TicketType.objects.filter(account=self.request.user.accountuser.account)
+        return form
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

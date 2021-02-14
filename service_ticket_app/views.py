@@ -64,4 +64,5 @@ class CalendarView(LoginRequiredMixin, TemplateView):
         context['in_progress_count'] = in_progress_count(self.request)
         context['completed_today_tickets_count'] = completed_today_tickets_count(self.request)
         context['tech_todays_tickets_count'] = tech_todays_tickets_count(self.request)
+        context['tech_completed_today_tickets_count'] = tech_completed_today_tickets_count(self.request)
         return context

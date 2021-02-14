@@ -1,11 +1,9 @@
-from django.contrib.auth import authenticate, login, logout
+
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponse, HttpResponseRedirect, request
 from django.shortcuts import render
-from django.urls import reverse, reverse_lazy
-from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
-                                  UpdateView)
+from django.urls import reverse_lazy
+from django.views.generic import DeleteView, ListView
 from service_ticket_app import utils
 from service_ticket_app.utils import *
 
@@ -29,7 +27,7 @@ def add_user(request):
             new_user = user_form.save()
             new_user.set_password(new_user.password)
             new_user.save()
-
+            # adds logged in users account to newly created users account
             user_account = account_user_form.save(commit=False)
             user_account.user = new_user
             user_account.account = request.user.accountuser.account

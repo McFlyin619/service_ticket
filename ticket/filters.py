@@ -20,6 +20,5 @@ class TicketFilter(django_filters.FilterSet):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
     # change the widget choices after initialization
-        # self.form.fields['ticket_number'].label = 'Ticket Number'
         self.form.fields['Date'].label = 'Date for report'
 

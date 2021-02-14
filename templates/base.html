@@ -90,11 +90,14 @@ bottom: .5em;
                                    Schedule
                                 </a>
                             </li>
+                            {% if user.accountuser.role == 'Admin' %}
                             <li>
                                 <a href="{% url 'upcoming:upcoming' %}" class="waves-effect">
                                    Upcoming 
                                 </a>
                             </li>
+                            {% else %}
+                            {% endif %}
                         </ul>
                     </div>
                 </li>
@@ -132,6 +135,7 @@ bottom: .5em;
                     </div>
                 </li>
             </ul>
+            {% if user.accountuser.role == 'Admin' %}
             <ul class="collapsible collapsible-accordion">
                 <li>
                     <a class="collapsible-header waves-effect arrow-r"><i class="fas fa-chevron-right"></i>Manage<i class="fas fa-angle-down rotate-icon"></i>
@@ -207,6 +211,8 @@ bottom: .5em;
                     </div>
                 </li>
             </ul>
+            {% else %}
+            {% endif %}
         </li>
         <!--/. Side navigation links -->
     </ul>

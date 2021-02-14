@@ -1,6 +1,5 @@
-from django.db import models
 from django.contrib.auth.models import User
-
+from django.db import models
 
 # Create your models here.
 ROLES = {
@@ -9,6 +8,7 @@ ROLES = {
     # ('Customer','Customer')
 }
 
+# Each individual company will have thier own users as AccountUsers. Every model has an account which refers to this Account Company name
 class AccountCompany(models.Model):
     company_name = models.CharField(max_length=100)
 

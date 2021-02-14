@@ -9,7 +9,9 @@ from .models import *
 
 
 class TicketForm(forms.ModelForm):
-    
+    """
+    Form used for creating a Ticket
+    """
     class Meta:
         model = Ticket
         fields = 'ticket_number','t_customer','t_jobsite','assigned','stop','department','t_type','scope','repair_notes','additional_work','schedule','start_job','completed',
@@ -25,6 +27,9 @@ class TicketForm(forms.ModelForm):
         self.fields["t_type"].label = "Service Type"
 
 class TicketUpdateForm(forms.ModelForm):
+    """
+    Used for updating the Ticket model when logged in as an Admin
+    """
     ticket_number = forms.CharField(widget=forms.TextInput(attrs={'readonly':'readonly'}))
     
     class Meta:
@@ -41,15 +46,11 @@ class TicketUpdateForm(forms.ModelForm):
         self.fields["t_type"].label = "Service Type"
 
 class TechTicketUpdateForm(forms.ModelForm):
+    """
+    Form used for technicians to update parts of the Ticket model
+    """
     ticket_number = forms.CharField(widget=forms.TextInput(attrs={'readonly':'readonly'}))
     
     class Meta:
         model = Ticket
         fields = ('ticket_number','start_job','completed','repair_notes','additional_work')      
-
-# class PartsUsedForm(forms.ModelForm):
-#     class Meta:
-#         model = PartsUsed 
-#         fields = ('part',)     
-
-# PartsFormSet = inlineformset_factory(Ticket, PartsUsed, fields=('part',))
