@@ -191,6 +191,8 @@ bottom: .5em;
                     </div>
                 </li>
             </ul>
+            {% else %}
+            {% endif %}
             <ul class="collapsible collapsible-accordion">
                 <li>
                     <a class="collapsible-header waves-effect arrow-r"><i class="fas fa-chevron-right"></i>{{request.user.accountuser.account}} Account<i class="fas fa-angle-down rotate-icon"></i>
@@ -211,8 +213,6 @@ bottom: .5em;
                     </div>
                 </li>
             </ul>
-            {% else %}
-            {% endif %}
         </li>
         <!--/. Side navigation links -->
     </ul>
