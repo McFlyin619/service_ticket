@@ -186,9 +186,25 @@
     {% for h in history %}
         {% if h.ticket_number == ticket.ticket_number %}
         {% else %}
-            <div class='col-auto'>
-                <a href="{% url 'ticket_app:ticket_detail' pk=h.ticket_number %}" type="button" class="btn btn-outline-blue btn-rounded px-2">
-                #{{ h.ticket_number }} - {{ h.end_time|date }} by {% for t in h.assigned.all%} {{t}} {% endfor %}
+            <div class='col-12'>
+                <a href="{% url 'ticket_app:ticket_detail' pk=h.ticket_number %}" type="button" class="btn btn-outline-blue btn-block btn-rounded m-2 px-5">
+                <div class="row">
+                    <div class="col-lg">
+                        <b>Ticket  #</b> {{ h.ticket_number }}
+                    </div>
+                    <div class="col-lg">
+                    <b>Scope of work:</b> {{ h.scope|truncatechars:50 }}
+                    </div>
+                    <div class="col-lg">
+                        <b>Completed on:</b> {{ h.end_time|date }}
+                    </div>
+                    <div class="col-lg">
+                        <b>by</b> 
+                        {% for t in h.assigned.all%} 
+                            {{t}} 
+                        {% endfor %}
+                    </div>
+                </div>
                 </a>
             </div> 
         {% endif %}
