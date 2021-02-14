@@ -98,7 +98,7 @@ class TicketUpdateView(LoginRequiredMixin,UpdateView):
         """
         Gets the form and filters the fields to only show information related the the logged in users account
         """
-        form = super(TicketCreateView, self).get_form(form_class)
+        form = super(TicketUpdateView, self).get_form(form_class)
         form.fields['assigned'].queryset = AccountUser.objects.filter(account=self.request.user.accountuser.account)
         form.fields['t_customer'].queryset = Customer.objects.filter(account=self.request.user.accountuser.account)
         form.fields['t_jobsite'].queryset = Jobsite.objects.filter(account=self.request.user.accountuser.account)
