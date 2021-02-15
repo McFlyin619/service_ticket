@@ -26,6 +26,9 @@ class AccountUser(models.Model):
     def __str__(self):
         return str(self.user.username) + ' - ' + str(self.account)
 
+    class Meta:
+        ordering = ['-account',]
+
     
 
 
