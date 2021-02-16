@@ -1,7 +1,10 @@
 
+from django.contrib import messages
+from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import DeleteView, ListView
 from service_ticket_app import utils
@@ -17,6 +20,7 @@ from . import forms
 @login_required
 def add_user(request):
     registered = False
+    # user_count = user_count(request)
 
     if request.method == 'POST':
         user_form = forms.UserCreateForm(data=request.POST)
@@ -51,6 +55,7 @@ def add_user(request):
         'account_user_form':account_user_form,
         'ticket_count':ticket_count,
         'tech_ticket_count':tech_ticket_count,
+        'user_count':user_count(request)
     }
 
     return render(request,'accounts/add_user.html',context=context) 
@@ -72,8 +77,25 @@ class UserListView(ListView,LoginRequiredMixin):
         context['completed_today_tickets_count'] = completed_today_tickets_count(self.request)
         context['tech_todays_tickets_count'] = tech_todays_tickets_count(self.request)
         context['tech_completed_today_tickets_count'] = tech_completed_today_tickets_count(self.request)
+        context['user_count'] = user_count(self.request)
         return context 
 
 class UserDeleteView(DeleteView,LoginRequiredMixin):
     model = AccountUser
     success_url = reverse_lazy('accounts:users')
+
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, data=request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Important!
+            messages.success(request, 'Your password was successfully updated!')
+            return redirect('accounts:change_password')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'accounts:change_passowrd', {
+        'form': form
+    })

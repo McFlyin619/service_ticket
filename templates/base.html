@@ -206,11 +206,11 @@ bottom: .5em;
                     </a>
                     <div class="collapsible-body">
                         <ul>
-                            {% comment %} <li>
-                                <a href="#" class="waves-effect">
-                                    Profile
+                            <li>
+                                <a href="{% url 'accounts:change_password' %}" class="waves-effect">
+                                    Change Password
                                 </a>
-                            </li> {% endcomment %}
+                            </li> 
                             <li>
                                 <a href="{% url 'user_logout' %}" class="waves-effect">
                                     Logout

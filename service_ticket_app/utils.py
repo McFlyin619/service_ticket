@@ -1,5 +1,6 @@
 from upcoming.models import Post
 from ticket.models import *
+from django.contrib.auth.models import User
 
 # Tickets
 
@@ -155,3 +156,10 @@ def ticket(request):
     """
     ticket = Ticket.objects.filter(account=request.user.accountuser.account)
     return ticket
+
+def user_count(request):
+    """
+    Returns the amount of users in a company
+    """
+    user_count = AccountUser.objects.filter(account=request.user.accountuser.account).count()
+    return user_count

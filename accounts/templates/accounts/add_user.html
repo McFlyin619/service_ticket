@@ -1,18 +1,44 @@
 {% extends 'base.html'%}
 {% load bootstrap4 %}
 {% block content %}
-
 <h2>
 {% if registered %}
     Tech added!
-{% else %}
-    <h1>Add Tech</h1>
+{% elif request.user.accountuser.account.membership == 'Basic' and user_count <= 5 %}
+<h1>Add User</h1>
 </h2>
-<form method="POST">
-    {% csrf_token %}
-    {% bootstrap_form user_form %}
-    {% bootstrap_form account_user_form %}
-    <input class='btn btn-rounded btn-primary' type="submit" value='Save'>
-</form>
+    <form method="POST">
+        {% csrf_token %}
+        {% bootstrap_form user_form %}
+        {% bootstrap_form account_user_form %}
+        <input class='btn btn-rounded btn-primary' type="submit" value='Save'>
+    </form>
+{% elif request.user.accountuser.account.membership == 'Pro' and user_count <= 15 %}
+<h1>Add User</h1>
+</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {% bootstrap_form user_form %}
+        {% bootstrap_form account_user_form %}
+        <input class='btn btn-rounded btn-primary' type="submit" value='Save'>
+    </form>
+{% elif request.user.accountuser.account.membership == 'Enterprise' and user_count <= 200 %}
+<h1>Add User</h1>
+</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {% bootstrap_form user_form %}
+        {% bootstrap_form account_user_form %}
+        <input class='btn btn-rounded btn-primary' type="submit" value='Save'>
+    </form>
+{% else %}
+You have {{ user_count}} user{{ user_count|pluralize }}! Your {{ request.user.accountuser.account.membership }} account allows for {% if request.user.accountuser.account.membership == 'Basic' %}
+    5
+    {% elif request.user.accountuser.account.membership == 'Pro' %}
+    15
+    {% else %}
+    50
+    {% endif %}
+    users! Please delete or upgrade your plan!
 {% endif %}
 {% endblock %}
