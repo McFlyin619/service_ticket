@@ -6,7 +6,7 @@ from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   UpdateView)
 from service_ticket_app.utils import *
 
-from ticket.forms import TechTicketUpdateForm, TicketForm, TicketUpdateForm
+from ticket.forms import TechTicketCompleteUpdateForm, TechTicketUpdateForm, TicketForm, TicketUpdateForm
 
 from .filters import TicketFilter
 from .models import Ticket
@@ -123,6 +123,24 @@ class TicketUpdateView(LoginRequiredMixin,UpdateView):
 class TechTicketUpdateView(LoginRequiredMixin, UpdateView):
     model = Ticket
     form_class = TechTicketUpdateForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['ticket_count'] = ticket_count(self.request)
+        context['tech_ticket_count'] = tech_ticket_count(self.request)
+        context['todays_tickets'] = todays_tickets(self.request)
+        context['tech_todays_tickets'] = tech_todays_tickets(self.request)
+        context['todays_tickets_count'] = todays_tickets_count(self.request)
+        context['in_progress_count'] = in_progress_count(self.request)
+        context['completed_today_tickets_count'] = completed_today_tickets_count(self.request)
+        context['tech_todays_tickets_count'] = tech_todays_tickets_count(self.request)
+        context['tech_completed_today_tickets_count'] = tech_completed_today_tickets_count(self.request)
+
+        return context
+
+class TechTicketCompleteUpdateView(LoginRequiredMixin, UpdateView):
+    model = Ticket
+    form_class = TechTicketCompleteUpdateForm
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

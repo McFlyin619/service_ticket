@@ -69,6 +69,8 @@ class Ticket(models.Model):
             self.end_time = timezone.now()
         elif not self.completed and self.end_time is not None:
             self.end_time = None
+        
+        
         super(Ticket, self).save(*args, **kwargs)
 
     def __str__(self):

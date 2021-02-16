@@ -44,7 +44,8 @@ class TicketUpdateForm(forms.ModelForm):
         self.fields["assigned"].label = "Technician"
         self.fields["department"].label = "Dept"
         self.fields["t_type"].label = "Service Type"
-
+        
+        
 class TechTicketUpdateForm(forms.ModelForm):
     """
     Form used for technicians to update parts of the Ticket model
@@ -53,4 +54,14 @@ class TechTicketUpdateForm(forms.ModelForm):
     
     class Meta:
         model = Ticket
-        fields = ('ticket_number','start_job','completed','repair_notes','additional_work')      
+        fields = ('ticket_number','start_job',)
+
+class TechTicketCompleteUpdateForm(forms.ModelForm):
+    """
+    Form used for technicians to update parts of the Ticket model
+    """
+    ticket_number = forms.CharField(widget=forms.TextInput(attrs={'readonly':'readonly'}))
+    
+    class Meta:
+        model = Ticket
+        fields = ('ticket_number','completed','repair_notes','additional_work')      
