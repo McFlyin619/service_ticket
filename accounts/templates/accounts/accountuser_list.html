@@ -51,8 +51,10 @@
                             <td> {{ u.user.email }} </td>
                             <td> {{ u.role }} </td>
                             <td>
-                            {% if user.username == 'Demo'%}
-                                "delete button here"
+                            {% if user.username == 'Demo-Tech'%}
+                                <a href="#" type="button" class="btn btn-outline-danger btn-rounded btn-sm px-2">
+                                    <i class="fas fa-trash-alt lt mt-0"></i>
+                                </a>
                             {% else %}
                                 <a href="{% url 'accounts:delete_user' pk=u.pk %}" type="button" class="btn btn-outline-danger btn-rounded btn-sm px-2">
                                     <i class="fas fa-trash-alt lt mt-0"></i>

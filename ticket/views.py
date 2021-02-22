@@ -253,6 +253,8 @@ class ServiceProvidedDeleteView(LoginRequiredMixin, DeleteView):
 @login_required
 def reports(request):
     ticket_filter = TicketFilter(request.GET, queryset=Ticket.objects.filter(account=request.user.accountuser.account))
+
+    
        
     context = {
         'ticket_filter': ticket_filter,

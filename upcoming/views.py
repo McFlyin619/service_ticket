@@ -1,8 +1,10 @@
+from django.views.generic.edit import DeleteView
 from upcoming.models import Post
 from django.shortcuts import render
 from service_ticket_app.utils import *
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import TemplateView, CreateView, DetailView
+from django.views.generic import TemplateView, CreateView, DetailView, DeleteView
+from django.urls import reverse_lazy
 # Create your views here.
 class UpcomingView(LoginRequiredMixin, TemplateView):
     template_name = 'upcoming/upcoming.html'
@@ -60,3 +62,6 @@ class PostDetailView(LoginRequiredMixin,DetailView):
         context['tech_completed_today_tickets_count'] = tech_completed_today_tickets_count(self.request)
         return context 
 
+class PostDeleteView(LoginRequiredMixin, DeleteView):
+    model = Post
+    success_url = reverse_lazy('upcoming:upcoming') 

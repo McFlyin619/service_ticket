@@ -45,7 +45,7 @@ class Ticket(models.Model):
     t_customer = models.ForeignKey(Customer,null=True, on_delete=models.SET_NULL)
     t_jobsite = models.ForeignKey(Jobsite, null=True, on_delete=models.SET_NULL)
     stop = models.CharField(choices=STOP, max_length=254, default='1st')
-    assigned = models.ManyToManyField(AccountUser, blank=True)
+    assigned = models.ForeignKey(AccountUser,on_delete=models.SET_NULL, null=True, blank=True)
     department = models.ForeignKey(ServiceProvided,null=True, on_delete=models.SET_NULL)
     t_type = models.ForeignKey(TicketType,null=True, on_delete=models.SET_NULL)
     scope = models.TextField()
