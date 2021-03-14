@@ -64,9 +64,7 @@
                             <td>{{ t.scope|truncatechars:20 }}</td>
                             <td>{{ t.department }}</td>
                             <td>{{ t.t_type }}</td>
-                            {% for t in t.assigned.all %}
-                                <td>{{ t }}</td>
-                            {% endfor %}
+                            <td>{{ t.assigned }}</td>
                             <td>
                                 <a href="{% url 'ticket_app:ticket_detail' pk=t.ticket_number %}" type="button" class="btn btn-outline-blue btn-rounded btn-sm px-2">
                                     <i class="fas fa-eye lt mt-0"></i>
@@ -96,9 +94,7 @@
                             <td>{{ t.scope|truncatechars:20 }}</td>
                             <td>{{ t.department }}</td>
                             <td>{{ t.t_type }}</td>
-                            {% for t in t.assigned.all %}
-                                <td>{{ t }}</td>
-                            {% endfor %}
+                            <td>{{ t.assigned }}</td>
                             <td>
                                 <a href="{% url 'ticket_app:ticket_detail' pk=t.ticket_number %}" type="button" class="btn btn-outline-blue btn-rounded btn-sm px-2">
                                     <i class="fas fa-eye lt mt-0"></i>

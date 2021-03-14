@@ -120,7 +120,7 @@ $(document).ready(function(){
         {% if user.accountuser.role == 'Tech'%}
             {% for t in tech_tickets_calendar%}
             {
-                title: "{% for tech in t.assigned.all %}{{tech}}{% endfor %}",
+                title: "{{t.assigned}}",
                 date:"{{t.schedule}}",
                 description:"Ticket# {{t.ticket_number}}",
                 url: "{% url 'ticket_app:ticket_detail' pk=t.ticket_number %}",
@@ -131,7 +131,7 @@ $(document).ready(function(){
         {% if user.accountuser.role == 'Admin' %}
             {% for t in tickets %}
             {
-                title: "{% for tech in t.assigned.all %}{{tech}}{% endfor %} - {% if t.completed == True %} Completed {% elif t.start_job == True and t.completed == False %} In progress - Current time on the job is {{ t.start_time|timesince:t.end_time }} {% else %} {{ t.stop }} Stop {% endif %}",
+                title: "{{t.assigned}} - {% if t.completed == True %} Completed {% elif t.start_job == True and t.completed == False %} In progress - Current time on the job is {{ t.start_time|timesince:t.end_time }} {% else %} {{ t.stop }} Stop {% endif %}",
                 date:"{{t.schedule}}",
                 description:"Ticket# {{t.ticket_number}} {% if t.completed == True %} Completed {% elif t.start_job == True and t.completed == False %} In progress - Current time on the job is {{ t.start_time|timesince:t.end_time }} {% else %} Incomplete {% endif %}",
                 url: "{% url 'ticket_app:ticket_detail' pk=t.ticket_number %}",

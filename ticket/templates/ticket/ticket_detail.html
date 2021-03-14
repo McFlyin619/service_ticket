@@ -98,13 +98,13 @@
                 </h5>
                 <div class="row">
                     <div class="col-md">
-                        <label>Name</label>
+                        <label for="card-text">Name</label>
                         <p class="card-text">
-                            {{ ticket.t_customer.fname }} {{ ticket.t_customer.lname }} - {{ ticket.t_customer.company}}
+                            {{ ticket.t_customer.fname }} {{ ticket.t_customer.lname }} - {{ ticket.t_customer.company.name}}
                         </p>
                     </div>
                     <div class="col-md">
-                        <label> Email/Phone</label>
+                        <label for="card-text"> Email/Phone</label>
                         <p class="card-text">
                             {{ ticket.t_customer.email }} - {{ ticket.t_customer.phone_number }}
                         </p>
@@ -112,11 +112,12 @@
                 </div>
                 <div class='row'>
                     <div class="col-md">
-                        <label>Address</label>
-                        <p>{{ ticket.t_customer.address }}</p>
+                        <label for="card-text">Address</label>
+                        <p class="card-text">{{ ticket.t_customer.company.address1 }} {{ ticket.t_customer.company.address2 }}</p>
+                        <p class="card-text">{{ ticket.t_customer.company.city }}, {{ ticket.t_customer.company.state }} {{ticket.t_customer.company.zip_code }}</p>
                     </div>
                 </div>
-                <label>Notes</label>
+                <label for="card-text">Notes</label>
                 <p class="card-text">
                     {{ ticket.t_customer.note }}
                 </p>                
@@ -149,6 +150,8 @@
         </p>         
     </div>
 </div>
+{% if not ticket.repair_notes %}
+{% else %}
 <div class="jumbotron pt-2 mb-2">
     <div class="row">
         <label class="lead">
@@ -161,6 +164,9 @@
         </p>         
     </div>
 </div>
+{% endif %}
+{% if not ticket.additional_work %}
+{% else %}
 <div class="jumbotron pt-2">
     <div class="row">
         <label class="lead">
@@ -173,6 +179,9 @@
         </p>         
     </div>
 </div>
+{% endif %}
+{% if not history %}
+{% else %}
 <div class="jumbotron pt-2">
     <div class="row">
         <label class="lead">
@@ -208,5 +217,6 @@
     {% endfor %}        
     </div>
 </div>
+{% endif %}
 
 {% endblock %}

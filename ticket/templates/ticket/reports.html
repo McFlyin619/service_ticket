@@ -49,13 +49,15 @@
                      {% for f in ticket_filter.qs %}
                         <tr>
                             <td>{{ f.ticket_number }}</td>
-                            <td> 
-                                {% for t in f.assigned.all %}
-                                    {{ t }}
-                                {% endfor %}
-                            </td>
+                            <td>{{ f.assigned }}</td>
                             <td>
+                            {% if not f.start_time %}
+                                Incomplete
+                            {% elif f.start_time and not f.end_time %}
+                                In Progress
+                            {% else %}
                                 {{ f.start_time|timesince:f.end_time}}
+                            {% endif %}
                             </td>
                             <td>
                                 <a href="{% url 'ticket_app:ticket_detail' pk=f.ticket_number %}" type="button" class="btn btn-outline-blue btn-rounded btn-sm px-2">
