@@ -206,9 +206,7 @@
                     </div>
                     <div class="col-lg">
                         <b>by</b> 
-                        {% for t in h.assigned.all%} 
-                            {{t}} 
-                        {% endfor %}
+                        {{ h.assigned }}
                     </div>
                 </div>
                 </a>
